@@ -1,0 +1,5 @@
+-lib heaps
+-cp src
+-js build/js/main.js
+-main Main
+-debug

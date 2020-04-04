@@ -1,0 +1,19 @@
+{
+  "name": "haxe-shooter",
+  "version": "0.0.1",
+  "description": "A top-down shooter using heaps",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.16.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "game"
+  ],
+  "author": "@wilbefast",
+  "license": "ISC"
+}
