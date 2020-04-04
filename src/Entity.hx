@@ -44,17 +44,30 @@ class Entity extends h2d.Object {
   // ------------------------------------------------------------
 
   public function update(dt : Float) : Void {
-    // speed
-    x += speed.x;
-    y += speed.y;
+    // calculate speed
+    var norm = speed.length();
+    var newNorm = norm;
 
     // friction
     Useful.assert(friction >= 0, "friction cannot be negative");
     if (friction != 0) {
-      Useful.assert(friction <= 1, "friction cannot be above 100%");
-      //speed.scale3(Math.pow(1 - friction, dt));
+      newNorm /= Math.pow(1 + friction, 1000*dt);
     }
 
+    // terminal velocity
+    if (norm > maxSpeed) {
+      newNorm = maxSpeed;
+    }
+
+    // update speed
+    if (norm != newNorm) {
+      speed.scale3(newNorm / norm);
+    }
+
+    // update position
+    x += speed.x;
+    y += speed.y;
+    
     // collision checking
     // TODO
   }

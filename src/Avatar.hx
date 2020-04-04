@@ -7,12 +7,16 @@ class Avatar extends Entity {
   private var bitmap : h2d.Bitmap;
   private var direction = new h3d.Vector(0, 0, 0);
 
+  private static inline var HIGH_FRICTION = 9000;
+  private static inline var LOW_FRICTION = 70;
+  private static inline var ACCELERATION = 1.3;
+
   public function new(args : {
     s2d : h2d.Scene
   }) {
     super(args);
-    maxSpeed = 10;
-    //friction = 0.1;
+    //maxSpeed = 10;
+    friction = 0.1;
 
     var tile = h2d.Tile.fromColor(0xFFFFFF, size, size);
     tile.dx = tile.dy = -size / 2;
@@ -41,9 +45,16 @@ class Avatar extends Entity {
       direction.y += 1;
     }
 
-    direction.normalize();
-    direction.scale3(10);
-    speed = direction;//.add(direction);
+    var norm = direction.length();
+    if (norm > 0) {
+      direction.scale3(ACCELERATION / norm);
+      friction = LOW_FRICTION;
+    }
+    else {
+      friction = HIGH_FRICTION;
+    }
+
+    speed = speed.add(direction);
 
     super.update(dt);
   }
