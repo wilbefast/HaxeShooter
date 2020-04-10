@@ -1,9 +1,18 @@
 class Useful {
 
-  public static function assert(check : Bool, message : String) : Void {
+  public static inline function assert(check : Bool, message : String) : Void {
     if(!check) {
       trace('Assertion failed: ${message}');
     }
+  }
+
+  public static inline function clamp01(a : Float) {
+    return a > 1 ? 1 : (a < 0 ? 0 : a);
+  }
+
+  public static inline function lerp(a : Float, b : Float, k : Float) : Float {
+    k = clamp01(k);
+    return b*k + (1 - k)*a;
   }
 
   public static function shuffle<T>(array : Array<T>) : Void {

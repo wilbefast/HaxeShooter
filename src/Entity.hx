@@ -9,8 +9,17 @@ class Entity extends h2d.Object {
   private static var all : Array<Entity>;
 
   public static function updateAll(dt : Float) : Void {
-    for(i in 0 ... all.length) {
-      all[i].update(dt);
+    var i = 0;
+    while(i < all.length) {
+      var current = all[i];
+      if(current.purge) {
+        all[i] = all[all.length - 1];
+        all.pop();
+      }
+      else {
+        current.update(dt);
+        i++;
+      }
     }
   }
 
@@ -22,15 +31,15 @@ class Entity extends h2d.Object {
   public var maxSpeed : Float = Math.POSITIVE_INFINITY;
   public var friction : Float = 0.0;
 
+  public var purge : Bool = false;
+
   // ------------------------------------------------------------
   // CONSTRUCTOR
   // ------------------------------------------------------------
 
-  public function new(args : {
-    s2d : h2d.Scene
-  }) {
-    Useful.assert(args.s2d != null, 'args.s2d must be non-null');
-    super(args.s2d);
+  public function new(scene : h2d.Object) {
+    Useful.assert(scene != null, 'scene must be non-null');
+    super(scene);
 
     // add to the list of all the entities
     if(all == null) {
@@ -51,7 +60,7 @@ class Entity extends h2d.Object {
     // friction
     Useful.assert(friction >= 0, "friction cannot be negative");
     if (friction != 0) {
-      newNorm /= Math.pow(1 + friction, 1000*dt);
+      newNorm /= Math.pow(1 + friction, dt);
     }
 
     // terminal velocity

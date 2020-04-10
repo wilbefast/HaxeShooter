@@ -1,3 +1,4 @@
+import js.html.MouseEvent;
 import h2d.Object;
 
 class Main extends hxd.App {
@@ -18,9 +19,22 @@ class Main extends hxd.App {
     }
 
     private override function update(dt : Float) : Void {
-      Entity.updateAll(dt / 1000);
+      Entity.updateAll(dt);
     }
 
     private function onEvent(event : hxd.Event) : Void {
+      switch(event.kind) {
+        case EPush:
+          if(event.button == 0) {
+            avatar.setFiring(true);
+          }
+        case ERelease:
+          if(event.button == 0) {
+            avatar.setFiring(false);
+          }
+        case EMove:
+          avatar.setTarget(event.relX, event.relY);
+        case _: 
+      }
     }
 }

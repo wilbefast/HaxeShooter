@@ -1,61 +1,101 @@
 using hxd.Key;
+using h3d.Vector;
 
 class Avatar extends Entity {
 
-  private static inline var size = 32;
+  // ------------------------------------------------------------
+  // CONSTANTS
+  // ------------------------------------------------------------
 
-  private var bitmap : h2d.Bitmap;
-  private var direction = new h3d.Vector(0, 0, 0);
+  private static inline var SIZE = 32;
+  private static inline var HIGH_FRICTION = 8000.0;
+  private static inline var LOW_FRICTION = 0.003;
+  private static inline var ACCELERATION = 2.1;
 
-  private static inline var HIGH_FRICTION = 9000;
-  private static inline var LOW_FRICTION = 70;
-  private static inline var ACCELERATION = 1.3;
+  // ------------------------------------------------------------
+  // ATTRIBUTES
+  // ------------------------------------------------------------
+
+  private var moveDirection = new Vector(0, 0, 0);
+  private var weaponTarget = new Vector(0, 0, 0);
+  private var weaponDirection = new Vector(0, 0, 0);
+  private var isFiring = false;
+
+  // ------------------------------------------------------------
+  // CONSTRUCTOR
+  // ------------------------------------------------------------
 
   public function new(args : {
     s2d : h2d.Scene
   }) {
-    super(args);
-    //maxSpeed = 10;
-    friction = 0.1;
+    super(args.s2d);
+    maxSpeed = 10;
+    friction = HIGH_FRICTION;
 
-    var tile = h2d.Tile.fromColor(0xFFFFFF, size, size);
-    tile.dx = tile.dy = -size / 2;
-    bitmap = new h2d.Bitmap(tile, this);
+    var g = new h2d.Graphics(this);
+		g.beginFill(0xFFFFFF);
+		g.drawRect(-SIZE/2, -SIZE/2, SIZE, SIZE);
 
-    var label = new h2d.Text(hxd.res.DefaultFont.get(), bitmap);
+    var label = new h2d.Text(hxd.res.DefaultFont.get(), this);
     label.text = "hello world";
     label.textAlign = Center;
-    label.color = new h3d.Vector(1, 0, 0);
+    label.color = new Vector(1, 0, 0);
     label.y = -32;
   }
 
+  // ------------------------------------------------------------
+  // UPDATE LOOP
+  // ------------------------------------------------------------
+
   public override function update(dt : Float) {
-    direction.set(0, 0);
-
-    if (Key.isDown(Key.LEFT)) {
-      direction.x -= 1;
-    }
-    if (Key.isDown(Key.RIGHT)) {
-      direction.x += 1;
-    }
-    if (Key.isDown(Key.UP)) {
-      direction.y -= 1;
-    }
-    if (Key.isDown(Key.DOWN)) {
-      direction.y += 1;
+    // character weapon
+    if(isFiring) {
+      weaponDirection.load(weaponTarget);
+      weaponDirection.x -= x;
+      weaponDirection.y -= y;
+      weaponDirection.normalize();
+      var bullet = new Bullet(this, weaponDirection);
     }
 
-    var norm = direction.length();
-    if (norm > 0) {
-      direction.scale3(ACCELERATION / norm);
-      friction = LOW_FRICTION;
+    // character movement
+    moveDirection.set(0, 0);
+
+    if (Key.isDown(Key.LEFT) ||  Key.isDown(Key.A) || Key.isDown(Key.Q)) {
+      moveDirection.x -= 1;
     }
-    else {
+    if (Key.isDown(Key.RIGHT) || Key.isDown(Key.D)) {
+      moveDirection.x += 1;
+    }
+    if (Key.isDown(Key.UP) || Key.isDown(Key.W) || Key.isDown(Key.Z)) {
+      moveDirection.y -= 1;
+    }
+    if (Key.isDown(Key.DOWN) || Key.isDown(Key.S)) {
+      moveDirection.y += 1;
+    }
+    
+    var norm = moveDirection.length();
+    if(norm < 0.01) {
+      moveDirection.set(0, 0, 0);
       friction = HIGH_FRICTION;
     }
+    else {
+      moveDirection.scale3(ACCELERATION / norm);
+      friction = LOW_FRICTION;
+    }
+    
+    speed = speed.add(moveDirection);
+    super.update(dt); 
+  }
 
-    speed = speed.add(direction);
+  // ------------------------------------------------------------
+  // FIRING WEAPONS
+  // ------------------------------------------------------------
 
-    super.update(dt);
+  public function setFiring(firing : Bool) : Void {
+    isFiring = firing;
+  }
+
+  public function setTarget(x : Float, y : Float) : Void {
+    weaponTarget.set(x, y);
   }
 }
