@@ -6,7 +6,7 @@ class Bullet extends Entity {
   // CONSTANTS
   // ------------------------------------------------------------
 
-  private static inline var SIZE = 8.0;
+  private static inline var RADIUS = 4.0;
   private static inline var SPEED = 50.0;
   private static inline var LIFESPAN = 1.0;
 
@@ -24,14 +24,19 @@ class Bullet extends Entity {
   public function new(source : Entity, direction : Vector) {
     super(source.parent);
 
+    // visual
     var g = new h2d.Graphics(this);
 		g.beginFill(0xFFFF00);
-    g.drawRect(-SIZE/2, -SIZE/2, SIZE, SIZE);
+    g.drawRect(-RADIUS, -RADIUS, RADIUS*2, RADIUS*2);
     
+    // speed
     x = source.x;
     y = source.y;
     speed.load(direction);
     speed.scale3(SPEED);
+
+    // collisions
+    collider = new Collider(this, RADIUS);
   }
 
   // ------------------------------------------------------------

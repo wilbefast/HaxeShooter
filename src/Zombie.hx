@@ -74,5 +74,10 @@ class Zombie extends Entity {
   // ------------------------------------------------------------
 
   public override function onCollision(other : Entity, dt : Float) : Void {
+    if(Std.is(other, Bullet)) {
+      other.purge = true;
+      this.purge = true;
+      trace("bullet hit zombie");
+    }
   }
 }

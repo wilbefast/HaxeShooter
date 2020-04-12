@@ -68,6 +68,9 @@ class Entity extends h2d.Object {
 
   private function onPurge() : Void {
     remove();
+    if(collider != null) {
+      collider.purge = true;
+    }
   }
 
   public function onCollision(other : Entity, dt : Float) : Void {

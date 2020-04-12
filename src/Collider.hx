@@ -1,6 +1,7 @@
 import h3d.Vector;
+import h2d.Object;
 
-class Collider {
+class Collider extends Object {
 
   // ------------------------------------------------------------
   // STATIC METHODS
@@ -18,11 +19,10 @@ class Collider {
           all.pop();
         }
         else {
-          var currentEntity = current.entity;
-          current.position.set(currentEntity.x, currentEntity.y);
           for(j in i+1 ... all.length) {
             var other = all[j];
             if(current.isCollidingWith(other)) {
+              var currentEntity = current.entity;
               var otherEntity = other.entity;
               currentEntity.onCollision(otherEntity, dt);
               otherEntity.onCollision(currentEntity, dt);
@@ -49,19 +49,20 @@ class Collider {
   // ------------------------------------------------------------
 
   public function new(entity : Entity, radius : Float) {
-    // add to the list of all the colliders
-    if(all == null) {
-      all = new Array<Collider>();
-    }
-    all.push(this);
+    // attach events
+    Useful.assert(entity != null, "An entity must be specified");
+    this.entity = entity;
+    super(entity);
     
     // setup geometry
     Useful.assert(radius > 0, "Radius must be strictly positive");
     this.radius = radius;
 
-    // attach events
-    Useful.assert(entity != null, "An entity must be specified");
-    this.entity = entity;
+    // add to the list of all the colliders
+    if(all == null) {
+      all = new Array<Collider>();
+    }
+    all.push(this);
   }
 
   // ------------------------------------------------------------
@@ -69,6 +70,8 @@ class Collider {
   // ------------------------------------------------------------
 
   public inline function isCollidingWith(other : Collider) : Bool {
+    position.set(entity.x, entity.y);
+    other.position.set(other.entity.x, other.entity.y);
     var radius2 = radius + other.radius;
     radius2 *= radius2;
     return position.distanceSq(other.position) <= radius2;
