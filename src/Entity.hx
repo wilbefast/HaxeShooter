@@ -13,6 +13,7 @@ class Entity extends h2d.Object {
     while(i < all.length) {
       var current = all[i];
       if(current.purge) {
+        current.onPurge();
         all[i] = all[all.length - 1];
         all.pop();
       }
@@ -49,7 +50,15 @@ class Entity extends h2d.Object {
   }
 
   // ------------------------------------------------------------
-  // CONSTRUCTOR
+  // DESTRUCTOR
+  // ------------------------------------------------------------
+
+  private function onPurge() : Void {
+    remove();
+  }
+
+  // ------------------------------------------------------------
+  // UPDATE
   // ------------------------------------------------------------
 
   public function update(dt : Float) : Void {

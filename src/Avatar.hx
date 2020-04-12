@@ -7,10 +7,17 @@ class Avatar extends Entity {
   // CONSTANTS
   // ------------------------------------------------------------
 
+  // collisions
   private static inline var SIZE = 32;
+
+  // physics
   private static inline var HIGH_FRICTION = 8000.0;
   private static inline var LOW_FRICTION = 0.003;
   private static inline var ACCELERATION = 2.1;
+
+  // weapon
+  private static inline var TIME_BETWEEN_BULLETS = 0.1;
+  private static inline var RECOIL = 6;
 
   // ------------------------------------------------------------
   // ATTRIBUTES
@@ -20,6 +27,7 @@ class Avatar extends Entity {
   private var weaponTarget = new Vector(0, 0, 0);
   private var weaponDirection = new Vector(0, 0, 0);
   private var isFiring = false;
+  private var reloadTime = 0.0;
 
   // ------------------------------------------------------------
   // CONSTRUCTOR
@@ -49,12 +57,21 @@ class Avatar extends Entity {
 
   public override function update(dt : Float) {
     // character weapon
-    if(isFiring) {
+    reloadTime = Math.max(0, reloadTime - dt);
+    if(isFiring && reloadTime <= 0) {
+      // aim and fire
       weaponDirection.load(weaponTarget);
       weaponDirection.x -= x;
       weaponDirection.y -= y;
       weaponDirection.normalize();
       var bullet = new Bullet(this, weaponDirection);
+
+      // recoil
+      weaponDirection.scale3(RECOIL);
+      speed = speed.sub(weaponDirection);
+
+      // reload time
+      reloadTime = TIME_BETWEEN_BULLETS;
     }
 
     // character movement
