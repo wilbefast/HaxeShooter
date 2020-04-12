@@ -6,7 +6,7 @@ class Bullet extends Entity {
   // CONSTANTS
   // ------------------------------------------------------------
 
-  private static inline var RADIUS = 4.0;
+  private static inline var RADIUS = 12.0;
   private static inline var SPEED = 50.0;
   private static inline var LIFESPAN = 1.0;
 

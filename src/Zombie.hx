@@ -15,12 +15,20 @@ class Zombie extends Entity {
   private static inline var ACCELERATION = 1.6;
   private static inline var MAX_SPEED = 8;
 
+  // combat 
+  private static inline var MAX_HITPOINTS = 100;
+  private static inline var BULLET_DAMAGE = 25;
+  private static inline var BULLET_KNOCKBACK = 150;
+  private static inline var BULLET_STUN_DURATION = 0.7;
+
   // ------------------------------------------------------------
   // ATTRIBUTES
   // ------------------------------------------------------------
 
   private var target : Entity;
   private var moveDirection = new Vector(0, 0, 0);
+  private var hitpoints : Int = MAX_HITPOINTS;
+  private var stunDuration : Float = 0.0;
 
   // ------------------------------------------------------------
   // CONSTRUCTOR
@@ -51,20 +59,26 @@ class Zombie extends Entity {
   // ------------------------------------------------------------
 
   public override function update(dt : Float) {
-    // character movement
-    moveDirection.set(target.x - x, target.y - y);
-    
-    var norm = moveDirection.length();
-    if(norm < RADIUS) {
-      moveDirection.set(0, 0, 0);
+    if(stunDuration > 0) {
+      stunDuration -= dt;
       friction = HIGH_FRICTION;
     }
     else {
-      moveDirection.scale3(ACCELERATION / norm);
-      friction = LOW_FRICTION;
+      // character movement
+      moveDirection.set(target.x - x, target.y - y);
+      
+      var norm = moveDirection.length();
+      if(norm < RADIUS) {
+        moveDirection.set(0, 0, 0);
+        friction = HIGH_FRICTION;
+      }
+      else {
+        moveDirection.scale3(ACCELERATION / norm);
+        friction = LOW_FRICTION;
+      }
+      
+      speed = speed.add(moveDirection);
     }
-    
-    speed = speed.add(moveDirection);
 
     super.update(dt);
   }
@@ -75,9 +89,25 @@ class Zombie extends Entity {
 
   public override function onCollision(other : Entity, dt : Float) : Void {
     if(Std.is(other, Bullet)) {
+      // the bullet is destroyed
       other.purge = true;
-      this.purge = true;
-      trace("bullet hit zombie");
+
+      // take damage
+      hitpoints -= BULLET_DAMAGE;
+      if(hitpoints <= 0) {
+        this.purge = true;
+      }
+      else {
+        // stun
+        stunDuration = BULLET_STUN_DURATION;
+
+        // knock-back
+        moveDirection.set(x - other.x, y - other.y);
+        moveDirection.scale3(BULLET_KNOCKBACK);
+        moveDirection.add(other.speed);
+
+        speed = speed.add(moveDirection);
+      }
     }
   }
 }
