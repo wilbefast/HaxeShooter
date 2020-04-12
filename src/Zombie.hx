@@ -7,7 +7,7 @@ class Zombie extends Entity {
   // ------------------------------------------------------------
 
   // collisions
-  private static inline var SIZE = 32;
+  private static inline var RADIUS = 16;
 
   // physics
   private static inline var HIGH_FRICTION = 8000.0;
@@ -34,9 +34,11 @@ class Zombie extends Entity {
     maxSpeed = MAX_SPEED;
     friction = HIGH_FRICTION;
 
+    collider = new Collider(this, RADIUS);
+
     var g = new h2d.Graphics(this);
 		g.beginFill(0x00FF00);
-    g.drawRect(-SIZE/2, -SIZE/2, SIZE, SIZE);
+    g.drawRect(-RADIUS, -RADIUS, RADIUS*2, RADIUS*2);
 
     target = Entity.getFirst(function(entity) {
       return Std.is(entity, Avatar);
@@ -53,7 +55,7 @@ class Zombie extends Entity {
     moveDirection.set(target.x - x, target.y - y);
     
     var norm = moveDirection.length();
-    if(norm < SIZE) {
+    if(norm < RADIUS) {
       moveDirection.set(0, 0, 0);
       friction = HIGH_FRICTION;
     }
@@ -65,5 +67,12 @@ class Zombie extends Entity {
     speed = speed.add(moveDirection);
 
     super.update(dt);
+  }
+
+  // ------------------------------------------------------------
+  // COLLISIONS
+  // ------------------------------------------------------------
+
+  public override function onCollision(other : Entity, dt : Float) : Void {
   }
 }

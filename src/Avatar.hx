@@ -8,7 +8,7 @@ class Avatar extends Entity {
   // ------------------------------------------------------------
 
   // collisions
-  private static inline var SIZE = 32;
+  private static inline var RADIUS = 18;
 
   // physics
   private static inline var HIGH_FRICTION = 8000.0;
@@ -24,7 +24,10 @@ class Avatar extends Entity {
   // ATTRIBUTES
   // ------------------------------------------------------------
 
+  // control
   private var moveDirection = new Vector(0, 0, 0);
+
+  // weapon
   private var weaponTarget = new Vector(0, 0, 0);
   private var weaponDirection = new Vector(0, 0, 0);
   private var isFiring = false;
@@ -42,9 +45,11 @@ class Avatar extends Entity {
     maxSpeed = MAX_SPEED;
     friction = HIGH_FRICTION;
 
+    collider = new Collider(this, RADIUS);
+
     var g = new h2d.Graphics(this);
 		g.beginFill(0xFFFFFF);
-		g.drawRect(-SIZE/2, -SIZE/2, SIZE, SIZE);
+		g.drawRect(-RADIUS, -RADIUS, RADIUS*2, RADIUS*2);
 
     var label = new h2d.Text(hxd.res.DefaultFont.get(), this);
     label.text = "hello world";
@@ -116,5 +121,13 @@ class Avatar extends Entity {
 
   public function setTarget(x : Float, y : Float) : Void {
     weaponTarget.set(x, y);
+  }
+
+  // ------------------------------------------------------------
+  // COLLISIONS
+  // ------------------------------------------------------------
+
+  public override function onCollision(other : Entity, dt : Float) : Void {
+
   }
 }

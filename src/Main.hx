@@ -26,6 +26,7 @@ class Main extends hxd.App {
 
     private override function update(dt : Float) : Void {
       Entity.updateAll(dt);
+      Collider.generateCollisions(dt);
     }
 
     private function onEvent(event : hxd.Event) : Void {

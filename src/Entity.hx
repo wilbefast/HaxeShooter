@@ -1,4 +1,5 @@
 import h2d.Object;
+import h3d.Vector;
 
 class Entity extends h2d.Object {
 
@@ -38,9 +39,11 @@ class Entity extends h2d.Object {
   // ATTRIBUTES
   // ------------------------------------------------------------
 
-  public var speed = new h3d.Vector(0, 0, 0);
+  public var speed = new Vector(0, 0, 0);
   public var maxSpeed : Float = Math.POSITIVE_INFINITY;
   public var friction : Float = 0.0;
+  
+  private var collider : Collider = null;
 
   public var purge : Bool = false;
 
@@ -60,11 +63,26 @@ class Entity extends h2d.Object {
   }
 
   // ------------------------------------------------------------
-  // DESTRUCTOR
+  // EVENTS
   // ------------------------------------------------------------
 
   private function onPurge() : Void {
     remove();
+  }
+
+  public function onCollision(other : Entity, dt : Float) : Void {
+    // override this
+  }
+
+  // ------------------------------------------------------------
+  // MODIFICATION
+  // ------------------------------------------------------------
+
+  public function setCollider(newCollider : Collider) : Void {
+    if(collider != null) {
+      collider.purge = true;
+    }
+    collider = newCollider;
   }
 
   // ------------------------------------------------------------
@@ -95,8 +113,5 @@ class Entity extends h2d.Object {
     // update position
     x += speed.x;
     y += speed.y;
-    
-    // collision checking
-    // TODO
   }
 }
