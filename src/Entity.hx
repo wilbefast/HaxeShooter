@@ -24,6 +24,16 @@ class Entity extends h2d.Object {
     }
   }
 
+  public static function getFirst(?suchThat : Entity -> Bool) : Entity {
+    for(i in 0 ... all.length) {
+      var current = all[i];
+      if(!current.purge && (suchThat == null || suchThat(current))) {
+        return current;
+      }
+    }
+    return null;
+  }
+
   // ------------------------------------------------------------
   // ATTRIBUTES
   // ------------------------------------------------------------

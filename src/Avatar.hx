@@ -14,6 +14,7 @@ class Avatar extends Entity {
   private static inline var HIGH_FRICTION = 8000.0;
   private static inline var LOW_FRICTION = 0.003;
   private static inline var ACCELERATION = 2.1;
+  private static inline var MAX_SPEED = 10;
 
   // weapon
   private static inline var TIME_BETWEEN_BULLETS = 0.1;
@@ -34,10 +35,11 @@ class Avatar extends Entity {
   // ------------------------------------------------------------
 
   public function new(args : {
-    s2d : h2d.Scene
+    scene : h2d.Object
   }) {
-    super(args.s2d);
-    maxSpeed = 10;
+    super(args.scene);
+    
+    maxSpeed = MAX_SPEED;
     friction = HIGH_FRICTION;
 
     var g = new h2d.Graphics(this);

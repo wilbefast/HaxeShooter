@@ -12,10 +12,16 @@ class Main extends hxd.App {
       hxd.Window.getInstance().addEventTarget(onEvent);
 
       avatar = new Avatar({
-        s2d : s2d
+        scene : s2d
       });
       avatar.x = s2d.width / 2;
       avatar.y = s2d.height / 2;
+
+      var zombie = new Zombie({
+        scene : s2d
+      });
+      zombie.x = 32;
+      zombie.y = 32;
     }
 
     private override function update(dt : Float) : Void {
