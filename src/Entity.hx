@@ -13,6 +13,13 @@ class Entity extends h2d.Object {
   // STATIC METHODS
   // ------------------------------------------------------------
 
+  public static function clear() {
+    for(entity in all) {
+      entity.onPurge();
+    }
+    all = [];
+  }
+
   public static function updateAll(dt : Float) : Void {
     var i = 0;
     while(i < all.length) {

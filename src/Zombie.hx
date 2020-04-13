@@ -1,3 +1,4 @@
+import js.html.Gamepad;
 using h3d.Vector;
 
 class Zombie extends Entity {
@@ -30,7 +31,7 @@ class Zombie extends Entity {
   // ATTRIBUTES
   // ------------------------------------------------------------
 
-  private var target : Entity;
+  private var target : Avatar;
   private var moveDirection = new Vector(0, 0, 0);
   private var hitpoints : Int = MAX_HITPOINTS;
   private var stunDuration : Float = 0.0;
@@ -59,9 +60,9 @@ class Zombie extends Entity {
     label.color = new Vector(0, 0, 0);
     label.y = -8;
 
-    target = Entity.getFirst(function(entity) {
+    target = cast(Entity.getFirst(function(entity) {
       return Std.is(entity, Avatar);
-    });
+    }), Avatar);
     Useful.assert(target != null, 'There must be an avatar');
   }
 
@@ -124,6 +125,10 @@ class Zombie extends Entity {
       // take damage
       hitpoints -= BULLET_DAMAGE;
       if(hitpoints <= 0) {
+        // add score
+        target.addScore(1);
+        
+        // die
         this.purge = true;
       }
       else {
@@ -145,7 +150,9 @@ class Zombie extends Entity {
       moveDirection.set(x - other.x, y - other.y);
       moveDirection.scale3(COLLISION_KNOCKBACK);
       speed = speed.add(moveDirection);
-
+    }
+    else if(Std.is(other, Avatar)) {
+      State.setCurrent("game");
     }
   }
 }

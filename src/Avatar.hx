@@ -33,6 +33,10 @@ class Avatar extends Entity {
   private var isFiring = false;
   private var reloadTime = 0.0;
 
+  // score
+  private var score : Int = 0;
+  private var scoreLabel : h2d.Text;
+
   // ------------------------------------------------------------
   // CONSTRUCTOR
   // ------------------------------------------------------------
@@ -41,21 +45,30 @@ class Avatar extends Entity {
     scene : h2d.Object
   }) {
     super(args.scene);
-    
+
+    // physics
     maxSpeed = MAX_SPEED;
     friction = HIGH_FRICTION;
-
     collider = new Collider(this, RADIUS);
 
+    // visuals
     var g = new h2d.Graphics(this);
 		g.beginFill(0xFFFFFF);
 		g.drawRect(-RADIUS, -RADIUS, RADIUS*2, RADIUS*2);
-
     var label = new h2d.Text(hxd.res.DefaultFont.get(), this);
     label.text = "0_0";
     label.textAlign = Center;
     label.color = new Vector(0, 0, 0);
     label.y = -8;
+
+    // score
+    score = 0;
+    scoreLabel = new h2d.Text(hxd.res.DefaultFont.get(), args.scene);
+    scoreLabel.text = 'score: $score';
+    scoreLabel.textAlign = Left;
+    scoreLabel.color = new Vector(1, 1, 1);
+    scoreLabel.x = 32;
+    scoreLabel.y = 32;
   }
 
   // ------------------------------------------------------------
@@ -128,6 +141,20 @@ class Avatar extends Entity {
   // ------------------------------------------------------------
 
   public override function onCollision(other : Entity, dt : Float) : Void {
+    // TODO
+  }
 
+  // ------------------------------------------------------------
+  // SCORE
+  // ------------------------------------------------------------
+
+  public function addScore(amount : Int) {
+    score += amount;
+    scoreLabel.text = 'score: $score';
+  }
+
+  public override function onPurge() {
+    scoreLabel.remove();
+    super.onPurge();
   }
 }

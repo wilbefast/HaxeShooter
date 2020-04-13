@@ -1,3 +1,5 @@
+using h3d.Vector;
+
 class Game extends State {
 
   private static inline var ZOMBIE_PERIOD = 1.0;
@@ -13,11 +15,16 @@ class Game extends State {
   }
 
   public override function onEnter(previousState : State) {
+    // create avatar
     avatar = new Avatar({
       scene : this
     });
     avatar.x = State.scene.width / 2;
     avatar.y = State.scene.height / 2;
+  }
+
+  public override function onLeave(newState : State) {
+    Entity.clear();
   }
 
   public override function onUpdate(dt : Float) {
