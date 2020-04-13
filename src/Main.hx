@@ -13,7 +13,7 @@ class Main extends hxd.App {
         scene : s2d,
         states : [ new Title(), new Game(), new GameOver() ]
       });
-      State.setCurrent("game");
+      State.setCurrent("title");
 
       hxd.Window.getInstance().addEventTarget(State.triggerEvent);
     }

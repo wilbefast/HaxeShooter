@@ -152,7 +152,7 @@ class Zombie extends Entity {
       speed = speed.add(moveDirection);
     }
     else if(Std.is(other, Avatar)) {
-      State.setCurrent("game");
+      State.setCurrent("gameover");
     }
   }
 }
