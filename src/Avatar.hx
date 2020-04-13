@@ -52,10 +52,10 @@ class Avatar extends Entity {
 		g.drawRect(-RADIUS, -RADIUS, RADIUS*2, RADIUS*2);
 
     var label = new h2d.Text(hxd.res.DefaultFont.get(), this);
-    label.text = "hello world";
+    label.text = "0_0";
     label.textAlign = Center;
-    label.color = new Vector(1, 0, 0);
-    label.y = -32;
+    label.color = new Vector(0, 0, 0);
+    label.y = -8;
   }
 
   // ------------------------------------------------------------

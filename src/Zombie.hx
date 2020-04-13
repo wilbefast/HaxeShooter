@@ -40,7 +40,7 @@ class Zombie extends Entity {
   // ------------------------------------------------------------
 
   public function new(args : {
-    scene : h2d.Scene
+    scene : h2d.Object
   }) {
     super(args.scene);
     
@@ -53,10 +53,16 @@ class Zombie extends Entity {
 		g.beginFill(0x00FF00);
     g.drawRect(-RADIUS, -RADIUS, RADIUS*2, RADIUS*2);
 
+    var label = new h2d.Text(hxd.res.DefaultFont.get(), this);
+    label.text = "X_X";
+    label.textAlign = Center;
+    label.color = new Vector(0, 0, 0);
+    label.y = -8;
+
     target = Entity.getFirst(function(entity) {
       return Std.is(entity, Avatar);
     });
-    Useful.assert(target != null, "There must be an avatar");
+    Useful.assert(target != null, 'There must be an avatar');
   }
 
   // ------------------------------------------------------------

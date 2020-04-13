@@ -50,12 +50,12 @@ class Collider extends Object {
 
   public function new(entity : Entity, radius : Float) {
     // attach events
-    Useful.assert(entity != null, "An entity must be specified");
+    Useful.assert(entity != null, 'An entity must be specified');
     this.entity = entity;
     super(entity);
     
     // setup geometry
-    Useful.assert(radius > 0, "Radius must be strictly positive");
+    Useful.assert(radius > 0, 'Radius must be strictly positive');
     this.radius = radius;
 
     // add to the list of all the colliders

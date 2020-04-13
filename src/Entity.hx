@@ -4,10 +4,14 @@ import h3d.Vector;
 class Entity extends h2d.Object {
 
   // ------------------------------------------------------------
-  // STATIC METHODS
+  // STATIC VARIABLES
   // ------------------------------------------------------------
 
   private static var all : Array<Entity>;
+
+  // ------------------------------------------------------------
+  // STATIC METHODS
+  // ------------------------------------------------------------
 
   public static function updateAll(dt : Float) : Void {
     var i = 0;
@@ -96,7 +100,7 @@ class Entity extends h2d.Object {
     var newNorm = norm;
 
     // friction
-    Useful.assert(friction >= 0, "friction cannot be negative");
+    Useful.assert(friction >= 0, 'friction cannot be negative');
     if (friction != 0) {
       newNorm /= Math.pow(1 + friction, dt);
     }

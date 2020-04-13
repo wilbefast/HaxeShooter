@@ -14,7 +14,7 @@ class Tile<T> {
     x : Int,
     y : Int
   }) {
-    Useful.assert(args.grid != null, "args.grid cannot be null");
+    Useful.assert(args.grid != null, 'args.grid cannot be null');
     grid = args.grid;
     x = args.x;
     y = args.y;
