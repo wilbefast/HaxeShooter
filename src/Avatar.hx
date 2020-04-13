@@ -62,7 +62,7 @@ class Avatar extends Entity {
     label.y = -8;
 
     // score
-    score = 0;
+    GameOver.score = score = 0;
     scoreLabel = new h2d.Text(hxd.res.DefaultFont.get(), args.scene);
     scoreLabel.text = 'score: $score';
     scoreLabel.textAlign = Left;
@@ -151,6 +151,7 @@ class Avatar extends Entity {
   public function addScore(amount : Int) {
     score += amount;
     scoreLabel.text = 'score: $score';
+    GameOver.score = score;
   }
 
   public override function onPurge() {
