@@ -26,14 +26,22 @@ class Entity extends h2d.Object {
   }
 
   public static function getFirst(?suchThat : Entity -> Bool) : Entity {
-    for(i in 0 ... all.length) {
-      var current = all[i];
+    for(current in all) {
       if(!current.purge && (suchThat == null || suchThat(current))) {
         return current;
       }
     }
     return null;
   }
+
+  public static function map(f : Entity -> Bool) : Entity {
+    for(current in all) {
+      if(!current.purge && f(current)) {
+        return current;
+      }
+    }
+    return null;
+  };
 
   // ------------------------------------------------------------
   // ATTRIBUTES
@@ -62,6 +70,7 @@ class Entity extends h2d.Object {
     all.push(this);
   }
 
+
   // ------------------------------------------------------------
   // EVENTS
   // ------------------------------------------------------------
@@ -75,17 +84,6 @@ class Entity extends h2d.Object {
 
   public function onCollision(other : Entity, dt : Float) : Void {
     // override this
-  }
-
-  // ------------------------------------------------------------
-  // MODIFICATION
-  // ------------------------------------------------------------
-
-  public function setCollider(newCollider : Collider) : Void {
-    if(collider != null) {
-      collider.purge = true;
-    }
-    collider = newCollider;
   }
 
   // ------------------------------------------------------------

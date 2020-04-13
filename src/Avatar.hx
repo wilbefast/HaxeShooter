@@ -10,7 +10,7 @@ class Avatar extends Entity {
   // collisions
   private static inline var RADIUS = 18;
 
-  // physics
+  // movement
   private static inline var HIGH_FRICTION = 8000.0;
   private static inline var LOW_FRICTION = 0.003;
   private static inline var ACCELERATION = 2.1;

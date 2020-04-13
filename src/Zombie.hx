@@ -8,8 +8,12 @@ class Zombie extends Entity {
 
   // collisions
   private static inline var RADIUS = 16;
+  private static inline var COLLISION_STUN_DURATION = 0.2;
+  private static inline var COLLISION_KNOCKBACK = 200;
+  private static inline var MAX_REPULSION = 0.7;
+  private static inline var REPULSION_RANGE = RADIUS*6;
 
-  // physics
+  // movement
   private static inline var HIGH_FRICTION = 8000.0;
   private static inline var LOW_FRICTION = 0.003;
   private static inline var ACCELERATION = 1.6;
@@ -19,7 +23,8 @@ class Zombie extends Entity {
   private static inline var MAX_HITPOINTS = 100;
   private static inline var BULLET_DAMAGE = 25;
   private static inline var BULLET_KNOCKBACK = 150;
-  private static inline var BULLET_STUN_DURATION = 0.7;
+  private static inline var BULLET_STUN_DURATION = 0.4;
+
 
   // ------------------------------------------------------------
   // ATTRIBUTES
@@ -60,13 +65,13 @@ class Zombie extends Entity {
 
   public override function update(dt : Float) {
     if(stunDuration > 0) {
+      // recover from stun
       stunDuration -= dt;
       friction = HIGH_FRICTION;
     }
     else {
-      // character movement
+      // pursue target
       moveDirection.set(target.x - x, target.y - y);
-      
       var norm = moveDirection.length();
       if(norm < RADIUS) {
         moveDirection.set(0, 0, 0);
@@ -76,8 +81,26 @@ class Zombie extends Entity {
         moveDirection.scale3(ACCELERATION / norm);
         friction = LOW_FRICTION;
       }
-      
       speed = speed.add(moveDirection);
+
+      // query other objects present in the scene
+      Entity.map(function(other : Entity) {
+        if(Std.is(other, Avatar)) {
+          // TODO
+          // select a new target
+        }
+        if(Std.is(other, Zombie)) {
+          // repulse from other zombies
+          moveDirection.set(x - other.x, y - other.y);
+          var norm = moveDirection.length();
+          if(norm <= REPULSION_RANGE) {
+            var repulsion = 1 - (norm / REPULSION_RANGE);
+            moveDirection.scale3(repulsion * repulsion * MAX_REPULSION);
+            speed = speed.add(moveDirection);
+          }
+        }
+        return false;
+      });
     }
 
     super.update(dt);
@@ -105,9 +128,18 @@ class Zombie extends Entity {
         moveDirection.set(x - other.x, y - other.y);
         moveDirection.scale3(BULLET_KNOCKBACK);
         moveDirection.add(other.speed);
-
         speed = speed.add(moveDirection);
       }
+    }
+    else if(Std.is(other, Zombie)) {
+      // stun
+      stunDuration = COLLISION_STUN_DURATION;
+
+      // knock-back
+      moveDirection.set(x - other.x, y - other.y);
+      moveDirection.scale3(COLLISION_KNOCKBACK);
+      speed = speed.add(moveDirection);
+
     }
   }
 }
