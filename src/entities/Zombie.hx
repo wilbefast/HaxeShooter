@@ -128,6 +128,10 @@ class Zombie extends Entity {
         // add score
         target.addScore(1);
         
+        // shake screen
+        State.addFreeze(0.1);
+        State.addShake(2);
+
         // die
         this.purge = true;
       }

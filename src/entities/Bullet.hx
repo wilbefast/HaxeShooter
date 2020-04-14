@@ -37,6 +37,9 @@ class Bullet extends Entity {
 
     // collisions
     collider = new Collider(this, RADIUS);
+
+    // shake screen
+    State.addShake(1);
   }
 
   // ------------------------------------------------------------

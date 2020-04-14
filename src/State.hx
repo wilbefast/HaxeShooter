@@ -1,3 +1,4 @@
+import format.gif.Data.Frame;
 import h2d.Scene;
 
 class State extends h2d.Object {
@@ -6,9 +7,14 @@ class State extends h2d.Object {
   // STATIC VARIABLES
   // ------------------------------------------------------------
 
+  // state management
   private static var current : State;
   private static var all : Map<String, State>;
   private static var scene : h2d.Scene;
+
+  // juice
+  private static var freeze = 0.0;
+  private static var shake = 0.0;
 
   // ------------------------------------------------------------
   // STATIC METHODS
@@ -55,12 +61,34 @@ class State extends h2d.Object {
   
   public static function triggerUpdate(dt : Float) : Void {
     Useful.assert(current != null, 'A current state must exist');
-    current.onUpdate(dt);
+
+    shake -= 10*dt;
+    if(shake < 0) {
+      shake = 0;
+    }
+    else {
+      scene.x = (2 * Math.random() - 1) * shake;
+      scene.y = (2 * Math.random() - 1) * shake;
+    }
+
+    freeze -= dt;
+    if(freeze < 0) {
+      freeze = 0;
+      current.onUpdate(dt);
+    }
   }
 
   public static function triggerEvent(event : hxd.Event) {
     Useful.assert(current != null, 'A current state must exist');
     current.onEvent(event);
+  }
+
+  public static function addFreeze(amount : Float) : Void {
+    freeze += amount;
+  }
+
+  public static function addShake(amount : Float) : Void {
+    shake += amount;
   }
 
   // ------------------------------------------------------------
