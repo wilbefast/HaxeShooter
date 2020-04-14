@@ -1,6 +1,6 @@
 using h3d.Vector;
 
-class GameOver extends State {
+class ScoreScreen extends State {
 
   public static var score = 0;
 
@@ -8,7 +8,7 @@ class GameOver extends State {
 
   public override function new() {
     super({
-      name : "gameover"
+      name : "score"
     });
   }
 

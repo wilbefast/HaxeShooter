@@ -1,5 +1,7 @@
 -lib heaps
 -cp src
+-cp src/entities
+-cp src/states
 -js build/js/main.js
 -main Main
 -debug

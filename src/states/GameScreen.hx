@@ -1,6 +1,6 @@
 using h3d.Vector;
 
-class Game extends State {
+class GameScreen extends State {
 
   private static inline var ZOMBIE_PERIOD = 1.0;
   private static inline var ZOMBIE_DISTANCE = 50.0;

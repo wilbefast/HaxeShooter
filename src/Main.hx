@@ -11,7 +11,7 @@ class Main extends hxd.App {
 
       State.init({
         scene : s2d,
-        states : [ new Title(), new Game(), new GameOver() ]
+        states : [ new TitleScreen(), new GameScreen(), new ScoreScreen() ]
       });
       State.setCurrent("title");
 

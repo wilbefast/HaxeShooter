@@ -1,6 +1,6 @@
 using h3d.Vector;
 
-class Title extends State {
+class TitleScreen extends State {
 
   public override function new() {
     super({
