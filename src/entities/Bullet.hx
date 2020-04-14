@@ -40,6 +40,7 @@ class Bullet extends Entity {
 
     // shake screen
     State.addShake(1);
+    State.addFreeze(0.03);
   }
 
   // ------------------------------------------------------------

@@ -15,7 +15,12 @@ class Main extends hxd.App {
       });
       State.setCurrent("title");
 
-      hxd.Window.getInstance().addEventTarget(State.triggerEvent);
+      var window = hxd.Window.getInstance();
+      window.addEventTarget(State.triggerEvent);
+      window.addResizeEvent(function() {
+        State.triggerResize(window.width, window.height);
+      });
+      State.triggerResize(window.width, window.height);
     }
 
     private override function update(dt : Float) : Void {

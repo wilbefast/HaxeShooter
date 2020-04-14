@@ -156,7 +156,9 @@ class Zombie extends Entity {
       speed = speed.add(moveDirection);
     }
     else if(Std.is(other, Avatar)) {
-      State.setCurrent("score");
+      if(stunDuration <= 0) {
+        State.setCurrent("score");
+      }
     }
   }
 }

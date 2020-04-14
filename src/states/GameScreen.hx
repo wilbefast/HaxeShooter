@@ -15,15 +15,19 @@ class GameScreen extends State {
   }
 
   public override function onEnter(previousState : State) {
+    // reset score
+    State.score = 0;
+
     // create avatar
     avatar = new Avatar({
       scene : this
     });
-    avatar.x = State.scene.width / 2;
-    avatar.y = State.scene.height / 2;
+    avatar.x = State.WIDTH / 2;
+    avatar.y = State.HEIGHT / 2;
   }
 
   public override function onLeave(newState : State) {
+    State.score = avatar.score;
     Entity.clear();
   }
 
@@ -40,8 +44,8 @@ class GameScreen extends State {
         scene : this
       });
       var angle = Math.random() * Math.PI * 2;
-      zombie.x = State.scene.width * (0.5 + Math.cos(angle));
-      zombie.y = State.scene.width * (0.5 + Math.sin(angle));
+      zombie.x = State.WIDTH * (0.5 + Math.cos(angle));
+      zombie.y = State.HEIGHT * (0.5 + Math.sin(angle));
     }
   }
 

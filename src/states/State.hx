@@ -4,6 +4,13 @@ import h2d.Scene;
 class State extends h2d.Object {
 
   // ------------------------------------------------------------
+  // CONSTANTS
+  // ------------------------------------------------------------
+
+  public static inline var WIDTH : Int = 1366;
+  public static inline var HEIGHT : Int = 664;
+
+  // ------------------------------------------------------------
   // STATIC VARIABLES
   // ------------------------------------------------------------
 
@@ -12,9 +19,15 @@ class State extends h2d.Object {
   private static var all : Map<String, State>;
   private static var scene : h2d.Scene;
 
+  // view
+  private static var viewScale : Float = 1.0;
+
   // juice
   private static var freeze = 0.0;
   private static var shake = 0.0;
+
+  // game logic
+  private static var score : Int = 0;
 
   // ------------------------------------------------------------
   // STATIC METHODS
@@ -62,6 +75,7 @@ class State extends h2d.Object {
   public static function triggerUpdate(dt : Float) : Void {
     Useful.assert(current != null, 'A current state must exist');
 
+    // screen shake
     shake -= 10*dt;
     if(shake < 0) {
       shake = 0;
@@ -71,6 +85,7 @@ class State extends h2d.Object {
       scene.y = (2 * Math.random() - 1) * shake;
     }
 
+    // freeze or update
     freeze -= dt;
     if(freeze < 0) {
       freeze = 0;
@@ -81,6 +96,12 @@ class State extends h2d.Object {
   public static function triggerEvent(event : hxd.Event) {
     Useful.assert(current != null, 'A current state must exist');
     current.onEvent(event);
+  }
+
+  public static function triggerResize(width : Float, height : Float) {
+    // scale to user's screen size
+    viewScale = Math.min(width/WIDTH, height/HEIGHT);
+    scene.setScale(viewScale);
   }
 
   public static function addFreeze(amount : Float) : Void {

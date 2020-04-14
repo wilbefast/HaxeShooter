@@ -34,7 +34,7 @@ class Avatar extends Entity {
   private var reloadTime = 0.0;
 
   // score
-  private var score : Int = 0;
+  public var score(default, null) : Int = 0;
   private var scoreLabel : h2d.Text;
 
   // ------------------------------------------------------------
@@ -62,7 +62,6 @@ class Avatar extends Entity {
     label.y = -8;
 
     // score
-    ScoreScreen.score = score = 0;
     scoreLabel = new h2d.Text(hxd.res.DefaultFont.get(), args.scene);
     scoreLabel.text = 'score: $score';
     scoreLabel.textAlign = Left;
@@ -122,6 +121,22 @@ class Avatar extends Entity {
     
     speed = speed.add(moveDirection);
     super.update(dt); 
+
+    // lap around horizontally
+    if(x < 0) {
+      x += State.WIDTH;
+    }
+    else if (x > State.WIDTH) {
+      x -= State.WIDTH;
+    }
+
+    // lap around vertically
+    if(y < 0) {
+      y += State.HEIGHT;
+    }
+    else if (y > State.HEIGHT) {
+      y -= State.HEIGHT;
+    }
   }
 
   // ------------------------------------------------------------
@@ -151,7 +166,6 @@ class Avatar extends Entity {
   public function addScore(amount : Int) {
     score += amount;
     scoreLabel.text = 'score: $score';
-    ScoreScreen.score = score;
   }
 
   public override function onPurge() {
