@@ -7,8 +7,8 @@ class State extends h2d.Object {
   // CONSTANTS
   // ------------------------------------------------------------
 
-  public static inline var WIDTH : Int = 1600;
-  public static inline var HEIGHT : Int = 900;
+  public static inline var WIDTH : Int = 1366;
+  public static inline var HEIGHT : Int = 664;
 
   // ------------------------------------------------------------
   // STATIC VARIABLES

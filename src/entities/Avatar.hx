@@ -130,7 +130,7 @@ class Avatar extends Entity {
 
     // bounce off borders vertically
     var newY = y + speed.y*dt;
-    if(newY < 0 || newY > State.WIDTH) {
+    if(newY < 0 || newY > State.HEIGHT) {
       speed.y *= -0.9;
     }
 
