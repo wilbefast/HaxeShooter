@@ -70,9 +70,9 @@ class Entity extends h2d.Object {
   // CONSTRUCTOR
   // ------------------------------------------------------------
 
-  public function new(scene : h2d.Object) {
-    Useful.assert(scene != null, 'scene must be non-null');
-    super(scene);
+  public function new(parent : h2d.Object) {
+    Useful.assert(parent != null, 'parent must be non-null');
+    super(parent);
 
     // add to the list of all the entities
     if(all == null) {

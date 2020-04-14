@@ -7,8 +7,8 @@ class State extends h2d.Object {
   // CONSTANTS
   // ------------------------------------------------------------
 
-  public static inline var WIDTH : Int = 1366;
-  public static inline var HEIGHT : Int = 664;
+  public static inline var WIDTH : Int = 1600;
+  public static inline var HEIGHT : Int = 900;
 
   // ------------------------------------------------------------
   // STATIC VARIABLES
@@ -18,13 +18,14 @@ class State extends h2d.Object {
   private static var current : State;
   private static var all : Map<String, State>;
   private static var scene : h2d.Scene;
-
+  
   // view
   private static var viewScale : Float = 1.0;
-
+  
   // juice
   private static var freeze = 0.0;
   private static var shake = 0.0;
+  private static var root : h2d.Object;
 
   // game logic
   private static var score : Int = 0;
@@ -43,6 +44,7 @@ class State extends h2d.Object {
     // save the scene
     Useful.assert(args.scene != null, 'args.scene cannot be null');
     scene = args.scene;
+    root = new h2d.Object(scene);
 
     // create the state map
     all = new Map<String, State>();
@@ -67,7 +69,7 @@ class State extends h2d.Object {
     current.onLeave(newState);
     current.remove();
 
-    scene.addChild(newState);
+    root.addChild(newState);
     newState.onEnter(current);
     current = newState;
   }
@@ -81,8 +83,8 @@ class State extends h2d.Object {
       shake = 0;
     }
     else {
-      scene.x = (2 * Math.random() - 1) * shake;
-      scene.y = (2 * Math.random() - 1) * shake;
+      root.x = (2 * Math.random() - 1) * shake;
+      root.y = (2 * Math.random() - 1) * shake;
     }
 
     // freeze or update
@@ -102,6 +104,8 @@ class State extends h2d.Object {
     // scale to user's screen size
     viewScale = Math.min(width/WIDTH, height/HEIGHT);
     scene.setScale(viewScale);
+    scene.x = (width - WIDTH*viewScale) / 2;
+    scene.y = (height - HEIGHT*viewScale) / 2;
   }
 
   public static function addFreeze(amount : Float) : Void {

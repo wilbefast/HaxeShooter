@@ -18,9 +18,15 @@ class GameScreen extends State {
     // reset score
     State.score = 0;
 
+    // create background
+    var tile = h2d.Tile.fromColor(0x101010, 1, 1);
+    var bitmap = new h2d.Bitmap(tile, this);
+    bitmap.scaleX = State.WIDTH;
+    bitmap.scaleY = State.HEIGHT;
+
     // create avatar
     avatar = new Avatar({
-      scene : this
+      parent : this
     });
     avatar.x = State.WIDTH / 2;
     avatar.y = State.HEIGHT / 2;
@@ -29,6 +35,7 @@ class GameScreen extends State {
   public override function onLeave(newState : State) {
     State.score = avatar.score;
     Entity.clear();
+    removeChildren();
   }
 
   public override function onUpdate(dt : Float) {
@@ -41,7 +48,7 @@ class GameScreen extends State {
     if(zombie_timer <= 0) {
       zombie_timer = ZOMBIE_PERIOD;
       var zombie = new Zombie({
-        scene : this
+        parent : this
       });
       var angle = Math.random() * Math.PI * 2;
       zombie.x = State.WIDTH * (0.5 + Math.cos(angle));
@@ -60,7 +67,9 @@ class GameScreen extends State {
           avatar.setFiring(false);
         }
       case EMove:
-        avatar.setTarget(event.relX, event.relY);
+        var x = (event.relX - State.scene.x)/State.viewScale;
+        var y = (event.relY - State.scene.y)/State.viewScale;
+        avatar.setTarget(x, y);
       case _: 
     }
   }

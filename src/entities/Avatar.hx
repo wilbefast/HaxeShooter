@@ -42,9 +42,9 @@ class Avatar extends Entity {
   // ------------------------------------------------------------
 
   public function new(args : {
-    scene : h2d.Object
+    parent : h2d.Object
   }) {
-    super(args.scene);
+    super(args.parent);
 
     // physics
     maxSpeed = MAX_SPEED;
@@ -52,9 +52,10 @@ class Avatar extends Entity {
     collider = new Collider(this, RADIUS);
 
     // visuals
-    var g = new h2d.Graphics(this);
-		g.beginFill(0xFFFFFF);
-		g.drawRect(-RADIUS, -RADIUS, RADIUS*2, RADIUS*2);
+    var tile = h2d.Tile.fromColor(0xFFFFFF, 1, 1);
+    tile.dx = tile.dy = -0.5;
+    var bitmap = new h2d.Bitmap(tile, this);
+    bitmap.setScale(2*RADIUS);
     var label = new h2d.Text(hxd.res.DefaultFont.get(), this);
     label.text = "0_0";
     label.textAlign = Center;
@@ -62,7 +63,7 @@ class Avatar extends Entity {
     label.y = -8;
 
     // score
-    scoreLabel = new h2d.Text(hxd.res.DefaultFont.get(), args.scene);
+    scoreLabel = new h2d.Text(hxd.res.DefaultFont.get(), args.parent);
     scoreLabel.text = 'score: $score';
     scoreLabel.textAlign = Left;
     scoreLabel.color = new Vector(1, 1, 1);

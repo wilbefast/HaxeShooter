@@ -41,18 +41,19 @@ class Zombie extends Entity {
   // ------------------------------------------------------------
 
   public function new(args : {
-    scene : h2d.Object
+    parent : h2d.Object
   }) {
-    super(args.scene);
+    super(args.parent);
     
     maxSpeed = MAX_SPEED;
     friction = HIGH_FRICTION;
 
     collider = new Collider(this, RADIUS);
 
-    var g = new h2d.Graphics(this);
-		g.beginFill(0x00FF00);
-    g.drawRect(-RADIUS, -RADIUS, RADIUS*2, RADIUS*2);
+    var tile = h2d.Tile.fromColor(0x00FF00, 1, 1);
+    tile.dx = tile.dy = -0.5;
+    var bitmap = new h2d.Bitmap(tile, this);
+    bitmap.setScale(2*RADIUS);
 
     var label = new h2d.Text(hxd.res.DefaultFont.get(), this);
     label.text = "X_X";
@@ -138,6 +139,10 @@ class Zombie extends Entity {
       else {
         // stun
         stunDuration = BULLET_STUN_DURATION;
+
+        // shake screen
+        State.addFreeze(0.02);
+        State.addShake(0.1);
 
         // knock-back
         moveDirection.set(x - other.x, y - other.y);

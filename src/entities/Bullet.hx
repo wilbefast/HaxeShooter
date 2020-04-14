@@ -25,9 +25,10 @@ class Bullet extends Entity {
     super(source.parent);
 
     // visual
-    var g = new h2d.Graphics(this);
-		g.beginFill(0xFFFF00);
-    g.drawRect(-RADIUS, -RADIUS, RADIUS*2, RADIUS*2);
+    var tile = h2d.Tile.fromColor(0xFFFF00, 1, 1);
+    tile.dx = tile.dy = -0.5;
+    var bitmap = new h2d.Bitmap(tile, this);
+    bitmap.setScale(2*RADIUS);
     
     // speed
     x = source.x;

@@ -2,8 +2,6 @@ using h3d.Vector;
 
 class ScoreScreen extends State {
 
-  public static var score = 0;
-
   private var timer : Float;
 
   public override function new() {
@@ -18,7 +16,7 @@ class ScoreScreen extends State {
 
     // show score
     var label = new h2d.Text(hxd.res.DefaultFont.get(), this);
-    label.text = 'GAME OVER\nscore: $score';
+    label.text = 'GAME OVER\nscore: ${State.score}';
     label.textAlign = Center;
     label.color = new Vector(1, 1, 1);
     label.x = State.scene.width / 2;
