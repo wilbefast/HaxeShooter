@@ -11,14 +11,14 @@ class Avatar extends Entity {
   private static inline var RADIUS = 18;
 
   // movement
-  private static inline var HIGH_FRICTION = 8000.0;
-  private static inline var LOW_FRICTION = 0.003;
-  private static inline var ACCELERATION = 2.1;
-  private static inline var MAX_SPEED = 10;
+  private static inline var HIGH_FRICTION = 5000.0;
+  private static inline var LOW_FRICTION = 10;
+  private static inline var ACCELERATION = 5000.0;
+  private static inline var MAX_SPEED = 1000.0;
 
   // weapon
   private static inline var TIME_BETWEEN_BULLETS = 0.1;
-  private static inline var RECOIL = 6;
+  private static inline var RECOIL = 100.0;
 
   // ------------------------------------------------------------
   // ATTRIBUTES
@@ -116,7 +116,7 @@ class Avatar extends Entity {
       friction = HIGH_FRICTION;
     }
     else {
-      moveDirection.scale3(ACCELERATION / norm);
+      moveDirection.scale3(ACCELERATION / norm * dt);
       friction = LOW_FRICTION;
     }
     

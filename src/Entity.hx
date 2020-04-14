@@ -123,7 +123,7 @@ class Entity extends h2d.Object {
     }
 
     // update position
-    x += speed.x;
-    y += speed.y;
+    x += speed.x * dt;
+    y += speed.y * dt;
   }
 }

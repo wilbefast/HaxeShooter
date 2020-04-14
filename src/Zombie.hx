@@ -15,10 +15,10 @@ class Zombie extends Entity {
   private static inline var REPULSION_RANGE = RADIUS*6;
 
   // movement
-  private static inline var HIGH_FRICTION = 8000.0;
-  private static inline var LOW_FRICTION = 0.003;
-  private static inline var ACCELERATION = 1.6;
-  private static inline var MAX_SPEED = 8;
+  private static inline var HIGH_FRICTION = 2000.0;
+  private static inline var LOW_FRICTION = 0.01;
+  private static inline var ACCELERATION = 1000.0;
+  private static inline var MAX_SPEED = 300;
 
   // combat 
   private static inline var MAX_HITPOINTS = 100;
