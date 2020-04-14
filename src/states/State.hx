@@ -27,6 +27,10 @@ class State extends h2d.Object {
   private static var shake = 0.0;
   private static var root : h2d.Object;
 
+  // text
+  public static var smallFont : h2d.Font;
+  public static var bigFont : h2d.Font;
+
   // game logic
   private static var score : Int = 0;
 
@@ -58,6 +62,14 @@ class State extends h2d.Object {
       Useful.assert(!all.exists(state.name), 'The name ${state.name} already exists');
       all.set(state.name, state);
     }
+
+    // create the fonts
+    smallFont = hxd.res.DefaultFont.get().clone();
+    smallFont.resizeTo(24);
+    smallFont.setOffset(0, -12);
+    bigFont = hxd.res.DefaultFont.get().clone();
+    bigFont.resizeTo(48);
+    bigFont.setOffset(0, -24);
   }
 
   public static function setCurrent(newStateName : String) : Void {
@@ -109,11 +121,11 @@ class State extends h2d.Object {
   }
 
   public static function addFreeze(amount : Float) : Void {
-    freeze += amount;
+    freeze = Math.max(freeze, amount);
   }
 
   public static function addShake(amount : Float) : Void {
-    shake += amount;
+    shake = Math.max(shake, amount);
   }
 
   // ------------------------------------------------------------

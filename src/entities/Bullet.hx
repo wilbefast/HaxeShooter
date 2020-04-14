@@ -16,6 +16,7 @@ class Bullet extends Entity {
 
   private var direction = new Vector(0, 0, 0);
   private var life = LIFESPAN;
+  private var bitmap : h2d.Bitmap;
 
   // ------------------------------------------------------------
   // CONSTRUCTOR
@@ -27,7 +28,7 @@ class Bullet extends Entity {
     // visual
     var tile = h2d.Tile.fromColor(0xFFFF00, 1, 1);
     tile.dx = tile.dy = -0.5;
-    var bitmap = new h2d.Bitmap(tile, this);
+    bitmap = new h2d.Bitmap(tile, this);
     bitmap.setScale(2*RADIUS);
     
     // speed
@@ -49,6 +50,7 @@ class Bullet extends Entity {
   // ------------------------------------------------------------
 
   public override function update(dt : Float) {
+    bitmap.setScale(RADIUS * Useful.lerp(4, 2, 30*(1 - life)));
     if((life -= dt) <= 0.0) {
       purge = true;
     }

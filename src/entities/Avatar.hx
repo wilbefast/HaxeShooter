@@ -63,7 +63,7 @@ class Avatar extends Entity {
     label.y = -8;
 
     // score
-    scoreLabel = new h2d.Text(hxd.res.DefaultFont.get(), args.parent);
+    scoreLabel = new h2d.Text(State.smallFont, args.parent);
     scoreLabel.text = 'score: $score';
     scoreLabel.textAlign = Left;
     scoreLabel.color = new Vector(1, 1, 1);
@@ -94,7 +94,7 @@ class Avatar extends Entity {
       reloadTime = TIME_BETWEEN_BULLETS;
     }
 
-    // character movement
+    // character acceleration
     moveDirection.set(0, 0);
 
     if (Key.isDown(Key.LEFT) ||  Key.isDown(Key.A) || Key.isDown(Key.Q)) {
@@ -119,25 +119,23 @@ class Avatar extends Entity {
       moveDirection.scale3(ACCELERATION / norm * dt);
       friction = LOW_FRICTION;
     }
-    
+
     speed = speed.add(moveDirection);
+
+    // bounce off borders horizontally
+    var newX = x + speed.x*dt;
+    if(newX < 0 || newX > State.WIDTH) {
+      speed.x *= -0.9;
+    }
+
+    // bounce off borders vertically
+    var newY = y + speed.y*dt;
+    if(newY < 0 || newY > State.WIDTH) {
+      speed.y *= -0.9;
+    }
+
+    // update position
     super.update(dt); 
-
-    // lap around horizontally
-    if(x < 0) {
-      x += State.WIDTH;
-    }
-    else if (x > State.WIDTH) {
-      x -= State.WIDTH;
-    }
-
-    // lap around vertically
-    if(y < 0) {
-      y += State.HEIGHT;
-    }
-    else if (y > State.HEIGHT) {
-      y -= State.HEIGHT;
-    }
   }
 
   // ------------------------------------------------------------

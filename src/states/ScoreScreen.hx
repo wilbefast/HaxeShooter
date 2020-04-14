@@ -15,12 +15,12 @@ class ScoreScreen extends State {
     timer = 0;
 
     // show score
-    var label = new h2d.Text(hxd.res.DefaultFont.get(), this);
+    var label = new h2d.Text(State.bigFont, this);
     label.text = 'GAME OVER\nscore: ${State.score}';
     label.textAlign = Center;
     label.color = new Vector(1, 1, 1);
-    label.x = State.scene.width / 2;
-    label.y = State.scene.height / 2;
+    label.x = State.WIDTH / 2;
+    label.y = State.HEIGHT / 2;
   }
 
   public override function onUpdate(dt : Float) {
