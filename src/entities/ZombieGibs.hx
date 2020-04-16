@@ -20,6 +20,8 @@ class ZombieGibs extends Entity {
     State.addFreeze(0.5);
     State.addShake(2);
 
+    // audio
+    hxd.Res.kill.play(false, 0.1);
 
     // decay
     timer = DURATION;

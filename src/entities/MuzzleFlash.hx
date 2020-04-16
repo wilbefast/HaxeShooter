@@ -17,6 +17,9 @@ class MuzzleFlash extends Entity {
     bitmap.setScale(RADIUS*2);
     bitmap.alpha = 0.7;
 
+    // audio
+    hxd.Res.shoot.play(false, 0.1);
+
     // decay
     timer = DURATION;
   }

@@ -20,6 +20,9 @@ class BulletImpact extends Entity {
     State.addFreeze(0.1);
     State.addShake(1);
 
+    // audio
+    hxd.Res.impact.play(false, 0.15);
+
     // decay
     timer = DURATION;
   }

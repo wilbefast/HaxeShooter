@@ -155,7 +155,9 @@ class Zombie extends Entity {
     }
     else if(Std.is(other, Avatar)) {
       if(stunDuration <= 0) {
+        // game over!
         State.setCurrent("score");
+        hxd.Res.gameover.play(false, 0.1);
       }
     }
   }
