@@ -8,18 +8,14 @@ class Bullet extends Entity {
 
   private static inline var RADIUS = 18.0;
   private static inline var SPRITE_DIAMETER = RADIUS*1.5;
-  private static inline var EXPLOSION_DIAMETER = 4*SPRITE_DIAMETER;
   private static inline var SPEED = 2000.0;
   private static inline var LIFESPAN = 1.0;
-  private static inline var EXPLOSION_DURATION = 0.2;
 
   // ------------------------------------------------------------
   // ATTRIBUTES
   // ------------------------------------------------------------
 
   private var direction = new Vector(0, 0, 0);
-  private var timer = LIFESPAN;
-  private var isExploding = false;
   private var bitmap : h2d.Bitmap;
 
   // ------------------------------------------------------------
@@ -44,8 +40,10 @@ class Bullet extends Entity {
     // collisions
     collider = new Collider(this, RADIUS);
 
-    // shake screen
-    State.addShake(1);
+    // muzzle flash
+    var flash = new MuzzleFlash(this);
+    flash.x += direction.x * SPRITE_DIAMETER;
+    flash.y += direction.y * SPRITE_DIAMETER;
   }
 
   // ------------------------------------------------------------
@@ -53,28 +51,6 @@ class Bullet extends Entity {
   // ------------------------------------------------------------
 
   public override function update(dt : Float) {
-
-    if(isExploding) {
-      // particle effect
-      timer -= dt;
-      if(timer <= 0) {
-        purge = true;
-      }
-      else {
-        var progress = 1 - timer/EXPLOSION_DURATION;
-        bitmap.setScale(Useful.lerp(SPRITE_DIAMETER, EXPLOSION_DIAMETER, progress));
-        bitmap.alpha = 1 - progress;
-      }
-
-      return;
-    }
-
-    if((timer -= dt) <= 0.0) {
-      // timeout
-      explode();
-      return;
-    }
-
     // explode on horizontal walls
     var newX = x + speed.x*dt;
     if(newX < 0) {
@@ -98,7 +74,6 @@ class Bullet extends Entity {
     }
     
     // muzzle flash
-    bitmap.setScale(Useful.lerp(EXPLOSION_DIAMETER, SPRITE_DIAMETER, 30*(1 - timer)));
         
     // movement
     super.update(dt);
@@ -109,10 +84,7 @@ class Bullet extends Entity {
   // ------------------------------------------------------------
 
   public function explode() {
-    if(isExploding) {
-      return;
-    }
-    isExploding = true;
-    timer = EXPLOSION_DURATION;
+    new BulletImpact(this);
+    purge = true;
   }
 }

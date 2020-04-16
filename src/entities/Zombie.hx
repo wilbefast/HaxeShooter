@@ -129,20 +129,13 @@ class Zombie extends Entity {
         // add score
         target.addScore(1);
         
-        // shake screen
-        State.addFreeze(0.5);
-        State.addShake(2);
-
         // die
+        new ZombieGibs(this);
         this.purge = true;
       }
       else {
         // stun
         stunDuration = BULLET_STUN_DURATION;
-
-        // shake screen
-        State.addFreeze(0.1);
-        State.addShake(1);
 
         // knock-back
         moveDirection.set(x - other.x, y - other.y);
