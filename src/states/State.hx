@@ -89,6 +89,15 @@ class State extends h2d.Object {
   public static function triggerUpdate(dt : Float) : Void {
     Useful.assert(current != null, 'A current state must exist');
 
+    // freeze or update
+    freeze -= dt;
+    if(freeze < 0) {
+      freeze = 0;
+    }
+    else {
+      dt *= Math.max(0, 1 - freeze);
+    }
+    
     // screen shake
     shake -= 10*dt;
     if(shake < 0) {
@@ -98,13 +107,9 @@ class State extends h2d.Object {
       root.x = (2 * Math.random() - 1) * shake;
       root.y = (2 * Math.random() - 1) * shake;
     }
-
-    // freeze or update
-    freeze -= dt;
-    if(freeze < 0) {
-      freeze = 0;
-      current.onUpdate(dt);
-    }
+    
+    // update the current state
+    current.onUpdate(dt);
   }
 
   public static function triggerEvent(event : hxd.Event) {

@@ -121,7 +121,7 @@ class Zombie extends Entity {
   public override function onCollision(other : Entity, dt : Float) : Void {
     if(Std.is(other, Bullet)) {
       // the bullet is destroyed
-      other.purge = true;
+      cast(other, Bullet).explode();
 
       // take damage
       hitpoints -= BULLET_DAMAGE;
@@ -130,7 +130,7 @@ class Zombie extends Entity {
         target.addScore(1);
         
         // shake screen
-        State.addFreeze(0.1);
+        State.addFreeze(0.5);
         State.addShake(2);
 
         // die
@@ -141,8 +141,8 @@ class Zombie extends Entity {
         stunDuration = BULLET_STUN_DURATION;
 
         // shake screen
-        State.addFreeze(0.02);
-        State.addShake(0.1);
+        State.addFreeze(0.1);
+        State.addShake(1);
 
         // knock-back
         moveDirection.set(x - other.x, y - other.y);
