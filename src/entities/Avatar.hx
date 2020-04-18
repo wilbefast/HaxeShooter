@@ -162,7 +162,19 @@ class Avatar extends Entity {
   // ------------------------------------------------------------
 
   public override function onCollision(other : Entity, dt : Float) : Void {
-    // TODO
+    if(Std.is(other, Wall)) {
+      var wall = cast(other, Wall);
+      x -= speed.x * dt;
+      y -= speed.y * dt;
+      trace(wall.getPositionRelativeTo(this));
+      switch(wall.getPositionRelativeTo(this)) {
+        case Left | Right:
+          speed.x *= -1;
+        case Above | Below:
+          speed.y *= -1;
+        case _:
+      }
+    }
   }
 
   // ------------------------------------------------------------
