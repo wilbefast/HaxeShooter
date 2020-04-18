@@ -1,10 +1,15 @@
 class Useful {
 
-  public static inline function assert(check : Bool, message : String) : Void {
+  #if debug
+  public static function assert(check : Bool, message : String) : Void {
     if(!check) {
       trace('Assertion failed: ${message}');
     }
   }
+  #else
+  public static inline function assert(check : Bool, message : String) : Void {}
+  #end
+
 
   public static inline function clamp01(a : Float) {
     return a > 1 ? 1 : (a < 0 ? 0 : a);

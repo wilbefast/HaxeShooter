@@ -4,7 +4,11 @@ class GameScreen extends State {
   private static inline var ZOMBIE_DISTANCE = 50.0;
 
   private var avatar : Avatar;
-  private var zombie_timer : Float = ZOMBIE_PERIOD;
+  private var wallNorth : Wall;
+  private var wallSouth : Wall;
+  private var wallEast : Wall;
+  private var wallWest : Wall;
+  private var zombieTimer : Float;
 
   public override function new() {
     super({
@@ -16,11 +20,44 @@ class GameScreen extends State {
     // reset score
     State.score = 0;
 
+    // reset zombie timer
+    zombieTimer = ZOMBIE_PERIOD;
+
     // create background
     var tile = h2d.Tile.fromColor(0x101010, 1, 1);
     var bitmap = new h2d.Bitmap(tile, this);
     bitmap.scaleX = State.WIDTH;
     bitmap.scaleY = State.HEIGHT;
+
+    // create walls
+    wallNorth = new Wall({
+      parent : this,
+      x : 0,
+      y : -32,
+      width : State.WIDTH,
+      height : 32
+    });
+    wallSouth = new Wall({
+      parent : this,
+      x : 0,
+      y : State.HEIGHT + 32,
+      width : State.WIDTH,
+      height : 32
+    });
+    wallWest = new Wall({
+      parent : this,
+      x : -32,
+      y : 0,
+      width : 32,
+      height : State.HEIGHT
+    });
+    wallEast = new Wall({
+      parent : this,
+      x : State.WIDTH + 32,
+      y : 0,
+      width : 32,
+      height : State.HEIGHT
+    });
 
     // create avatar
     avatar = new Avatar({
@@ -45,9 +82,9 @@ class GameScreen extends State {
     EntityCollider.generateCollisions(dt);
 
     // spawn zombies periodically
-    zombie_timer -= dt;
-    if(zombie_timer <= 0) {
-      zombie_timer = ZOMBIE_PERIOD;
+    zombieTimer -= dt;
+    if(zombieTimer <= 0) {
+      zombieTimer = ZOMBIE_PERIOD;
       var zombie = new Zombie({
         parent : this
       });

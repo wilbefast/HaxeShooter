@@ -44,9 +44,7 @@ class EntityCollider {
   // ATTRIBUTES
   // ------------------------------------------------------------
 
-  public var position = new Vector(0, 0, 0);
   public var purge : Bool = false;
-  
   private var entity : Entity;
   private var heapsCollider : HeapsCollider;
 
@@ -72,7 +70,7 @@ class EntityCollider {
           case _: 
             Bounds(h2d.col.Bounds.fromValues(entity.x, entity.y, w, h));
         }
-      }
+    }
 
     // add to the list of all the colliders
     if(all == null) {

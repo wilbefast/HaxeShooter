@@ -51,32 +51,18 @@ class Bullet extends Entity {
   // ------------------------------------------------------------
 
   public override function update(dt : Float) {
-    // explode on horizontal walls
-    var newX = x + speed.x*dt;
-    if(newX < 0) {
-      x = 0;
-      explode();
-    }
-    else if(newX > State.WIDTH) {
-      x = State.WIDTH;
-      explode();
-    }
-
-    // explode on vertical walls
-    var newY = y + speed.y*dt;
-    if(newY < 0) {
-      y = 0;
-      explode();
-    }
-    else if(newY > State.HEIGHT) {
-      y = State.HEIGHT;
-      explode();
-    }
-    
-    // muzzle flash
-        
     // movement
     super.update(dt);
+  }
+
+  // ------------------------------------------------------------
+  // COLLISIONS
+  // ------------------------------------------------------------
+
+  public override function onCollision(other : Entity, dt : Float) : Void {
+    if(Std.is(other, Wall)) {
+      this.explode();
+    }
   }
 
   // ------------------------------------------------------------
