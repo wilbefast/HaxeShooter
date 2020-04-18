@@ -125,5 +125,10 @@ class Entity extends h2d.Object {
     // update position
     x += speed.x * dt;
     y += speed.y * dt;
+
+    // update collider position
+    if(collider != null && speed.x != 0 && speed.y != 0) {
+      collider.updatePosition();
+    }
   }
 }

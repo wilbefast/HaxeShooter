@@ -82,6 +82,18 @@ class EntityCollider {
   }
 
   // ------------------------------------------------------------
+  // MODIFICATION
+  // ------------------------------------------------------------
+
+  public inline function updatePosition() {
+    switch(heapsCollider) {
+      case Circle(c): c.x = entity.x; c.y = entity.y;
+      case Bounds(b): b.x = entity.x; b.y = entity.y;
+      case Point(p): p.x = entity.x; p.y = entity.y;
+    }
+  }
+
+  // ------------------------------------------------------------
   // QUERY
   // ------------------------------------------------------------
 
@@ -90,60 +102,17 @@ class EntityCollider {
       return false;
     }
     
-    var otherEntity = other.entity;
+    return switch([heapsCollider, other.heapsCollider]) {
+      case [Circle(c1), Circle(c2)]: c1.collideCircle(c2);
+      case [Circle(c1), Bounds(b2)]: c1.collideBounds(b2);
+      case [Circle(c1), Point(p2)]: c1.contains(p2);
+      case [Bounds(b1), Circle(c2)]: c2.collideBounds(b1);
+      case [Bounds(b1), Bounds(b2)]: b1.intersects(b2);
+      case [Bounds(b1), Point(p2)]: b1.contains(p2);
+      case [Point(p1), Circle(c2)]: c2.contains(p1);
+      case [Point(p1), Bounds(b2)]: b2.contains(p1);
+      case [Point(p1), Point(p2)]: p1.x == p2.x && p1.y == p2.y;
 
-    switch(heapsCollider) {
-      case Circle(c1): 
-        c1.x = entity.x;
-        c1.y = entity.y;
-        switch(other.heapsCollider) {
-          case Circle(c2): 
-            c2.x = otherEntity.x;
-            c2.y = otherEntity.y;
-            return c1.collideCircle(c2);
-          case Bounds(b2): 
-            b2.x = otherEntity.x;
-            b2.y = otherEntity.y;
-            return c1.collideBounds(b2);
-          case Point(p2):
-            p2.x = otherEntity.x;
-            p2.y = otherEntity.y;
-            return c1.contains(p2);
-        }
-      case Bounds(b1):
-        b1.x = entity.x;
-        b1.y = entity.y;
-        switch(other.heapsCollider) {
-          case Circle(c2): 
-            c2.x = otherEntity.x;
-            c2.y = otherEntity.y;
-            return c2.collideBounds(b1);
-          case Bounds(b2): 
-            b2.x = otherEntity.x;
-            b2.y = otherEntity.y;
-            return b1.intersects(b2);
-          case Point(p2):
-            p2.x = otherEntity.x;
-            p2.y = otherEntity.y;
-            return b1.contains(p2);
-        }
-      case Point(p1):
-        p1.x = entity.x;
-        p1.y = entity.y;
-        switch(other.heapsCollider) {
-          case Circle(c2): 
-            c2.x = otherEntity.x;
-            c2.y = otherEntity.y;
-            return c2.contains(p1);
-          case Bounds(b2): 
-            b2.x = otherEntity.x;
-            b2.y = otherEntity.y;
-            return b2.contains(p1);
-          case Point(p2):
-            p2.x = otherEntity.x;
-            p2.y = otherEntity.y;
-            return p1.x == p2.x && p1.y == p2.y;
-        }
     }
   }   
 }
