@@ -38,7 +38,7 @@ class Bullet extends Entity {
     speed.scale3(SPEED);
 
     // collisions
-    collider = new Collider(this, RADIUS);
+    collider = new EntityCollider(this, RADIUS);
 
     // muzzle flash
     var flash = new MuzzleFlash(this);

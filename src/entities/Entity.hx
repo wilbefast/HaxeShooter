@@ -62,7 +62,7 @@ class Entity extends h2d.Object {
   public var maxSpeed : Float = Math.POSITIVE_INFINITY;
   public var friction : Float = 0.0;
   
-  private var collider : Collider = null;
+  private var collider : EntityCollider = null;
 
   public var purge : Bool = false;
 

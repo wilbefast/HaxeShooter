@@ -42,7 +42,7 @@ class GameScreen extends State {
 
     // tick the simulation
     Entity.updateAll(dt);
-    Collider.generateCollisions(dt);
+    EntityCollider.generateCollisions(dt);
 
     // spawn zombies periodically
     zombie_timer -= dt;

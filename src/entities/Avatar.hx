@@ -1,5 +1,14 @@
+import h2d.col.Circle;
+import EntityCollider.HeapsCollider;
 import hxd.Key;
 import h3d.Vector;
+
+enum Color {
+  Red;
+  Green;
+  Blue;
+  Rgb(r:Int, g:Int, b:Int);
+}
 
 class Avatar extends Entity {
 
@@ -48,7 +57,7 @@ class Avatar extends Entity {
     // physics
     maxSpeed = MAX_SPEED;
     friction = HIGH_FRICTION;
-    collider = new Collider(this, RADIUS);
+    collider = new EntityCollider(this, RADIUS);
 
     // visuals
     var tile = h2d.Tile.fromColor(0xFFFFFF, 1, 1);

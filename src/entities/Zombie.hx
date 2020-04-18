@@ -48,7 +48,7 @@ class Zombie extends Entity {
     maxSpeed = MAX_SPEED;
     friction = HIGH_FRICTION;
 
-    collider = new Collider(this, RADIUS);
+    collider = new EntityCollider(this, RADIUS);
 
     var tile = h2d.Tile.fromColor(0x00FF00, 1, 1);
     tile.dx = tile.dy = -0.5;
