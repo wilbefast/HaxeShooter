@@ -133,18 +133,6 @@ class Avatar extends Entity {
 
     speed = speed.add(moveDirection);
 
-    // bounce off borders horizontally
-    var newX = x + speed.x*dt;
-    if(newX < 0 || newX > State.WIDTH) {
-      speed.x *= -0.9;
-    }
-
-    // bounce off borders vertically
-    var newY = y + speed.y*dt;
-    if(newY < 0 || newY > State.HEIGHT) {
-      speed.y *= -0.9;
-    }
-
     // update position
     super.update(dt); 
   }
@@ -164,9 +152,11 @@ class Avatar extends Entity {
   public override function onCollision(other : Entity, dt : Float) : Void {
     if(Std.is(other, Wall)) {
       var wall = cast(other, Wall);
-      x -= speed.x * dt;
-      y -= speed.y * dt;
-      trace(wall.getPositionRelativeTo(this));
+      var collisionX = x;
+      var collisionY = y;
+      x = prevX;
+      y = prevY;
+      snapToCollisionWith(wall, collisionX, collisionY);
       switch(wall.getPositionRelativeTo(this)) {
         case Left | Right:
           speed.x *= -1;

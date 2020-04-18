@@ -9,7 +9,7 @@ enum RelativePosition {
   BelowRight;
   BelowLeft;
   AboveLeft;
-  Null;
+  Around;
 }
 
 class Wall extends Entity {
@@ -38,7 +38,7 @@ class Wall extends Entity {
   }
 
   public function getPositionRelativeTo(entity : Entity) : RelativePosition {
-    var result = switch([entity.x < x, entity.y < y, entity.x > x + width, entity.y > y + height]) {
+    return switch([entity.x < x, entity.y < y, entity.x > x + width, entity.y > y + height]) {
       case [right, below, left, above] if(left && above): AboveLeft;
       case [right, below, left, above] if(left && below): BelowLeft;
       case [right, below, left, above] if(right && above): AboveRight;
@@ -47,9 +47,7 @@ class Wall extends Entity {
       case [right, below, left, above] if(left): Left;
       case [right, below, left, above] if(above): Above;
       case [right, below, left, above] if(below): Below;
-      case _: Null;
+      case _: Around;
     }
-    Useful.assert(result != Null, "This should never happen");
-    return result;
   }
 }

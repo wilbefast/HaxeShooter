@@ -61,6 +61,9 @@ class Entity extends h2d.Object {
   public var speed = new Vector(0, 0, 0);
   public var maxSpeed : Float = Math.POSITIVE_INFINITY;
   public var friction : Float = 0.0;
+
+  public var prevX(default, null) : Float;
+  public var prevY(default, null) : Float;
   
   private var collider : EntityCollider = null;
 
@@ -73,6 +76,9 @@ class Entity extends h2d.Object {
   public function new(parent : h2d.Object) {
     Useful.assert(parent != null, 'parent must be non-null');
     super(parent);
+
+    prevX = x;
+    prevY = y;
     
     // add to the list of all the entities
     if(all == null) {
@@ -81,9 +87,8 @@ class Entity extends h2d.Object {
     all.push(this);
   }
 
-
   // ------------------------------------------------------------
-  // EVENTS
+  // DESTRUCTION
   // ------------------------------------------------------------
 
   private function onPurge() : Void {
@@ -93,9 +98,39 @@ class Entity extends h2d.Object {
     }
   }
 
+  // ------------------------------------------------------------
+  // COLLISIONS
+  // ------------------------------------------------------------
+
   public function onCollision(other : Entity, dt : Float) : Void {
     // override this
   }
+
+  public function snapToCollisionWith(other : Entity, collisionX : Float, collisionY : Float) : Void {
+    var otherCollider = other.collider;
+    Useful.assert(other.collider != null, "other must have a collider");
+    Useful.assert(collider.isCollidingWith(otherCollider), "we cannot already be colliding");
+    Useful.assert(collider.wouldBeCollidingWith(otherCollider, collisionX, collisionY), "a collision position must be specified");
+    var safeX = x; 
+    var safeY = y;
+    
+    while(Useful.dist2(safeX, safeY, collisionX, collisionY) > 1) {
+      var checkX = Useful.lerp(collisionX, safeX, 0.5);
+      var checkY = Useful.lerp(collisionY, safeY, 0.5);
+      if(collider.wouldBeCollidingWith(otherCollider, checkX, checkY)) {
+        collisionX = checkX;
+        collisionY = checkY;
+      }
+      else {
+        safeX = checkX;
+        safeY = checkY;
+      }
+    }
+
+    x = prevX = safeX;
+    y = prevY = safeY;
+    collider.updatePosition();
+  } 
 
   // ------------------------------------------------------------
   // UPDATE
@@ -123,11 +158,13 @@ class Entity extends h2d.Object {
     }
 
     // update position
+    prevX = x;
+    prevY = y;
     x += speed.x * dt;
     y += speed.y * dt;
 
     // update collider position
-    if(collider != null && speed.x != 0 && speed.y != 0) {
+    if(collider != null && (prevX != x || prevY != y)) {
       collider.updatePosition();
     }
   }

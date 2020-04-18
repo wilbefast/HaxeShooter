@@ -33,30 +33,30 @@ class GameScreen extends State {
     wallNorth = new Wall({
       parent : this,
       x : 0,
-      y : -32,
+      y : -State.HEIGHT,
       width : State.WIDTH,
-      height : 32
+      height : State.HEIGHT
     });
     wallSouth = new Wall({
       parent : this,
       x : 0,
-      y : State.HEIGHT + 32,
+      y : State.HEIGHT,
       width : State.WIDTH,
-      height : 32
+      height : State.HEIGHT
     });
     wallWest = new Wall({
       parent : this,
-      x : -32,
-      y : 0,
-      width : 32,
-      height : State.HEIGHT
+      x : -State.WIDTH,
+      y : -State.HEIGHT,
+      width : State.WIDTH,
+      height : 3*State.HEIGHT
     });
     wallEast = new Wall({
       parent : this,
-      x : State.WIDTH + 32,
-      y : 0,
-      width : 32,
-      height : State.HEIGHT
+      x : State.WIDTH,
+      y : -State.HEIGHT,
+      width : State.WIDTH,
+      height : 3*State.HEIGHT
     });
 
     // create avatar

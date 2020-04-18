@@ -95,6 +95,18 @@ class EntityCollider {
   // QUERY
   // ------------------------------------------------------------
 
+  public function wouldBeCollidingWith(other : EntityCollider, x : Float, y : Float) : Bool {
+    var originalX = entity.x;
+    var originalY = entity.y;
+    entity.x = x;
+    entity.y = y;
+    updatePosition();
+    var result = isCollidingWith(other);
+    entity.x = originalX;
+    entity.y = originalY;
+    return result;
+  }
+
   public inline function isCollidingWith(other : EntityCollider) : Bool {
     if(purge || other.purge) {
       return false;
