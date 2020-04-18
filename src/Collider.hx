@@ -70,6 +70,10 @@ class Collider extends Object {
   // ------------------------------------------------------------
 
   public inline function isCollidingWith(other : Collider) : Bool {
+    if(purge || other.purge) {
+      return false;
+    }
+    
     position.set(entity.x, entity.y);
     other.position.set(other.entity.x, other.entity.y);
     var radius2 = radius + other.radius;
