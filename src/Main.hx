@@ -21,10 +21,7 @@ class Main extends hxd.App {
       // hook up events
       var window = hxd.Window.getInstance();
       window.addEventTarget(State.triggerEvent);
-      window.addResizeEvent(function() {
-        State.triggerResize(window.width, window.height);
-      });
-      State.triggerResize(window.width, window.height);
+      s2d.scaleMode = LetterBox(State.WIDTH, State.HEIGHT, false, Center, Center);
     }
 
     private override function update(dt : Float) : Void {

@@ -39,6 +39,9 @@ class GameScreen extends State {
   }
 
   public override function onUpdate(dt : Float) {
+    // read the mouse position
+    avatar.setTarget(State.scene.mouseX, State.scene.mouseY);
+
     // tick the simulation
     Entity.updateAll(dt);
     Collider.generateCollisions(dt);
@@ -53,24 +56,6 @@ class GameScreen extends State {
       var angle = Math.random() * Math.PI * 2;
       zombie.x = State.WIDTH * (0.5 + Math.cos(angle));
       zombie.y = State.HEIGHT * (0.5 + Math.sin(angle));
-    }
-  }
-
-  public override function onEvent(event : hxd.Event) : Void {
-    switch(event.kind) {
-      case EPush:
-        if(event.button == 0) {
-          avatar.setFiring(true);
-        }
-      case ERelease:
-        if(event.button == 0) {
-          avatar.setFiring(false);
-        }
-      case EMove:
-        var x = (event.relX - State.scene.x)/State.viewScale;
-        var y = (event.relY - State.scene.y)/State.viewScale;
-        avatar.setTarget(x, y);
-      case _: 
     }
   }
 }

@@ -117,14 +117,6 @@ class State extends h2d.Object {
     current.onEvent(event);
   }
 
-  public static function triggerResize(width : Float, height : Float) {
-    // scale to user's screen size
-    viewScale = Math.min(width/WIDTH, height/HEIGHT);
-    scene.setScale(viewScale);
-    scene.x = (width - WIDTH*viewScale) / 2;
-    scene.y = (height - HEIGHT*viewScale) / 2;
-  }
-
   public static function addFreeze(amount : Float) : Void {
     freeze = Math.max(freeze, amount);
   }

@@ -30,7 +30,6 @@ class Avatar extends Entity {
   // weapon
   private var weaponTarget = new Vector(0, 0, 0);
   private var weaponDirection = new Vector(0, 0, 0);
-  private var isFiring = false;
   private var reloadTime = 0.0;
 
   // score
@@ -76,6 +75,9 @@ class Avatar extends Entity {
   // ------------------------------------------------------------
 
   public override function update(dt : Float) {
+    // check whether mouse is down
+    var isFiring = Key.isDown(Key.MOUSE_LEFT);
+
     // character weapon
     reloadTime = Math.max(0, reloadTime - dt);
     if(isFiring && reloadTime <= 0) {
@@ -141,10 +143,6 @@ class Avatar extends Entity {
   // ------------------------------------------------------------
   // FIRING WEAPONS
   // ------------------------------------------------------------
-
-  public function setFiring(firing : Bool) : Void {
-    isFiring = firing;
-  }
 
   public function setTarget(x : Float, y : Float) : Void {
     weaponTarget.set(x, y);
