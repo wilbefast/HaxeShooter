@@ -151,12 +151,9 @@ class Avatar extends Entity {
 
   public override function onCollision(other : Entity, dt : Float) : Void {
     if(Std.is(other, Wall)) {
+      // bounce off walls
       var wall = cast(other, Wall);
-      var collisionX = x;
-      var collisionY = y;
-      x = prevX;
-      y = prevY;
-      snapToCollisionWith(wall, collisionX, collisionY);
+      snapFromCollisionWith(wall);
       switch(wall.getPositionRelativeTo(this)) {
         case Left | Right:
           speed.x *= -1;

@@ -6,8 +6,8 @@ class Bullet extends Entity {
   // CONSTANTS
   // ------------------------------------------------------------
 
-  private static inline var RADIUS = 18.0;
-  private static inline var SPRITE_DIAMETER = RADIUS*1.5;
+  private static inline var RADIUS = 24.0;
+  private static inline var SPRITE_DIAMETER = RADIUS*1.2;
   private static inline var SPEED = 2000.0;
   private static inline var LIFESPAN = 1.0;
 
@@ -61,6 +61,8 @@ class Bullet extends Entity {
 
   public override function onCollision(other : Entity, dt : Float) : Void {
     if(Std.is(other, Wall)) {
+      // snap to contact with walls
+      snapFromCollisionWith(other);
       this.explode();
     }
   }
