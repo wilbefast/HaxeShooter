@@ -1,4 +1,4 @@
-using h3d.Vector;
+import h3d.Vector;
 
 class TitleScreen extends State {
 
@@ -19,7 +19,7 @@ class TitleScreen extends State {
   }
 
   public override function onLeave(newState : State) {
-    // hide v
+    // hide title
     removeChildren();
   }
 

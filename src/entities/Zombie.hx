@@ -1,5 +1,5 @@
 import js.html.Gamepad;
-using h3d.Vector;
+import h3d.Vector;
 
 class Zombie extends Entity {
 

@@ -1,4 +1,4 @@
-using h3d.Vector;
+import h3d.Vector;
 
 class ScoreScreen extends State {
 

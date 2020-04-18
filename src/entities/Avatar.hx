@@ -1,5 +1,5 @@
-using hxd.Key;
-using h3d.Vector;
+import hxd.Key;
+import h3d.Vector;
 
 class Avatar extends Entity {
 

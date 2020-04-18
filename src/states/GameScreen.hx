@@ -1,5 +1,3 @@
-using h3d.Vector;
-
 class GameScreen extends State {
 
   private static inline var ZOMBIE_PERIOD = 1.0;
