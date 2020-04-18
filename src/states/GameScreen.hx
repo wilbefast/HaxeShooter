@@ -38,9 +38,9 @@ class GameScreen extends State {
     removeChildren();
   }
 
-  public override function onUpdate(dt : Float) {
+  public override function onUpdate(dt : Float, mouseX : Float, mouseY : Float) {
     // read the mouse position
-    avatar.setTarget(State.scene.mouseX, State.scene.mouseY);
+    avatar.setTarget(mouseX, mouseY);
 
     // tick the simulation
     Entity.updateAll(dt);

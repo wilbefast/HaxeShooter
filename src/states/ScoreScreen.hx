@@ -23,7 +23,7 @@ class ScoreScreen extends State {
     label.y = State.HEIGHT / 2;
   }
 
-  public override function onUpdate(dt : Float) {
+  public override function onUpdate(dt : Float, mouseX : Float, mouseY : Float) {
     timer += dt;
   }
 

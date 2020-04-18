@@ -17,10 +17,6 @@ class State extends h2d.Object {
   // state management
   private static var current : State;
   private static var all : Map<String, State>;
-  private static var scene : h2d.Scene;
-  
-  // view
-  private static var viewScale : Float = 1.0;
   
   // juice
   private static var freeze = 0.0;
@@ -39,16 +35,15 @@ class State extends h2d.Object {
   // ------------------------------------------------------------
 
   public static function init(args : {
-    scene : h2d.Scene,
+    parent : h2d.Object,
     states : Array<State>
   }) {
     // don't initialise twice
     Useful.assert(all == null, 'State has already been initialised');
 
-    // save the scene
-    Useful.assert(args.scene != null, 'args.scene cannot be null');
-    scene = args.scene;
-    root = new h2d.Object(scene);
+    // create the root node
+    Useful.assert(args.parent != null, 'args.parent cannot be null');
+    root = new h2d.Object(args.parent);
 
     // create the state map
     all = new Map<String, State>();
@@ -86,7 +81,7 @@ class State extends h2d.Object {
     current = newState;
   }
   
-  public static function triggerUpdate(dt : Float) : Void {
+  public static function triggerUpdate(dt : Float, mouseX : Float, mouseY : Float) : Void {
     Useful.assert(current != null, 'A current state must exist');
 
     // freeze or update
@@ -109,7 +104,7 @@ class State extends h2d.Object {
     }
     
     // update the current state
-    current.onUpdate(dt);
+    current.onUpdate(dt, mouseX, mouseY);
   }
 
   public static function triggerEvent(event : hxd.Event) {
@@ -150,7 +145,7 @@ class State extends h2d.Object {
     // override me
   }
 
-  public function onUpdate(dt : Float) : Void {
+  public function onUpdate(dt : Float, mouseX : Float, mouseY : Float) : Void {
     // override me
   }
 
