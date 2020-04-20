@@ -110,7 +110,6 @@ class Entity extends h2d.Object {
     Useful.assert(other.collider != null, "other must have a collider");
     var otherCollider = other.collider;
     Useful.assert(collider.isCollidingWith(otherCollider), "we must already be colliding");
-    Useful.assert(!collider.wouldBeCollidingWith(otherCollider, prevX, prevY), "a collision position must be specified");
     var collisionX = x;
     var collisionY = y;
     x = prevX;
@@ -122,7 +121,6 @@ class Entity extends h2d.Object {
   public function snapToCollisionWith(other : Entity, collisionX : Float, collisionY : Float) : Void {
     var otherCollider = other.collider;
     Useful.assert(other.collider != null, "other must have a collider");
-    Useful.assert(!collider.isCollidingWith(otherCollider), "we cannot already be colliding");
     Useful.assert(collider.wouldBeCollidingWith(otherCollider, collisionX, collisionY), "a collision position must be specified");
     var safeX = x; 
     var safeY = y;
