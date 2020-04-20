@@ -16,6 +16,17 @@
         "kind": "build",
         "isDefault": true
       }
+    },
+    {
+      "label": "Build PAK",
+      "type": "shell",
+      "command": "./build-pak.sh",
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "problemMatcher": []
     }
   ]
 }
