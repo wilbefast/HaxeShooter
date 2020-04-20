@@ -2,3 +2,4 @@ main.js
 main.js.map
 node_modules
 package-lock.json
+build/js/res.pak
