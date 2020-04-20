@@ -64,10 +64,9 @@ class Avatar extends Entity {
     collider = new EntityCollider(this, RADIUS);
 
     // visuals
-    var tile = h2d.Tile.fromColor(0xFFFFFF, 1, 1);
-    tile.dx = tile.dy = -0.5;
+    var atlas = hxd.Res.foreground;
+    var tile = atlas.get("anim_123");
     var bitmap = new h2d.Bitmap(tile, this);
-    bitmap.setScale(2*RADIUS);
     var label = new h2d.Text(hxd.res.DefaultFont.get(), this);
     label.text = "0_0";
     label.textAlign = Center;

@@ -1,0 +1,19 @@
+foreground.png
+size: 512,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+anim_123
+ rotate: false
+ xy: 0, 0
+ size: 384, 98
+ orig: 0, 0
+ offset: 0, 0
+ index: -1
+anim_abc
+ rotate: false
+ xy: 0, 98
+ size: 288, 96
+ orig: 0, 0
+ offset: 0, 0
+ index: -1
