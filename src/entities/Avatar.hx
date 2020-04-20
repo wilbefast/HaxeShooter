@@ -50,9 +50,13 @@ class Avatar extends Entity {
   // ------------------------------------------------------------
 
   public function new(args : {
-    parent : h2d.Object
+    parent : h2d.Object,
+    x : Float,
+    y : Float
   }) {
     super(args.parent);
+    x = args.x;
+    y = args.y;
 
     // physics
     maxSpeed = MAX_SPEED;

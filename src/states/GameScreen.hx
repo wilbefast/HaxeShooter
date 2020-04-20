@@ -61,10 +61,11 @@ class GameScreen extends State {
 
     // create avatar
     avatar = new Avatar({
-      parent : this
+      parent : this,
+      x : State.WIDTH / 2,
+      y : State.HEIGHT / 2
     });
-    avatar.x = State.WIDTH / 2;
-    avatar.y = State.HEIGHT / 2;
+    
   }
 
   public override function onLeave(newState : State) {
@@ -85,12 +86,12 @@ class GameScreen extends State {
     zombieTimer -= dt;
     if(zombieTimer <= 0) {
       zombieTimer = ZOMBIE_PERIOD;
-      var zombie = new Zombie({
-        parent : this
-      });
       var angle = Math.random() * Math.PI * 2;
-      zombie.x = State.WIDTH * (0.5 + Math.cos(angle));
-      zombie.y = State.HEIGHT * (0.5 + Math.sin(angle));
+      var zombie = new Zombie({
+        parent : this,
+        x : State.WIDTH * (0.5 + Math.cos(angle)),
+        y : State.HEIGHT * (0.5 + Math.sin(angle))
+      });
     }
   }
 }

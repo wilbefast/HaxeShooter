@@ -95,6 +95,14 @@ class EntityCollider {
   // QUERY
   // ------------------------------------------------------------
 
+  public inline function getPosition() : { x : Float, y : Float } {
+    return switch(heapsCollider) {
+      case Circle(c): {x : c.x, y : c.y};
+      case Bounds(b): {x : b.x, y : b.y};
+      case Point(p): {x : p.x, y : p.y};
+    }
+  }
+
   public function wouldBeCollidingWith(other : EntityCollider, x : Float, y : Float) : Bool {
     var originalX = entity.x;
     var originalY = entity.y;

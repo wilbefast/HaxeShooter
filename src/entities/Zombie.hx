@@ -42,9 +42,13 @@ class Zombie extends Entity {
   // ------------------------------------------------------------
 
   public function new(args : {
-    parent : h2d.Object
+    parent : h2d.Object,
+    x : Float,
+    y : Float
   }) {
     super(args.parent);
+    x = args.x;
+    y = args.y;
     
     maxSpeed = MAX_SPEED;
     friction = HIGH_FRICTION;
