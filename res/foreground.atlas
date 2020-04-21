@@ -1,5 +1,5 @@
 foreground.png
-size: 512,256
+size: 384,224
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
@@ -8,26 +8,40 @@ anim_123
  xy: 0, 0
  size: 128, 128
  orig: 0, 0
- offset: -64, -64
+ offset: 0, 0
  index: 0
 anim_123
  rotate: false
  xy: 128, 0
  size: 128, 128
  orig: 0, 0
- offset: -64, -64
+ offset: 0, 0
  index: 1
 anim_123
  rotate: false
  xy: 256, 0
  size: 128, 128
  orig: 0, 0
- offset: -64, -64
+ offset: 0, 0
  index: 2
-anim_abc
+anim_ABC
  rotate: false
- xy: 0, 98
- size: 288, 96
+ xy: 0, 128
+ size: 96, 96
  orig: 0, 0
  offset: 0, 0
- index: -1
+ index: 0
+anim_ABC
+ rotate: false
+ xy: 96, 128
+ size: 96, 96
+ orig: 0, 0
+ offset: 0, 0
+ index: 1
+anim_ABC
+ rotate: false
+ xy: 192, 128
+ size: 96, 96
+ orig: 0, 0
+ offset: 0, 0
+ index: 2

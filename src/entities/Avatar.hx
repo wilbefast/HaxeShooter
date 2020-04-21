@@ -66,6 +66,7 @@ class Avatar extends Entity {
     // visuals
     var atlas = hxd.Res.foreground;
     var tiles = atlas.getAnim("anim_123");
+    Useful.assert(tiles != null, "atlas must contain the specified animation");
     var anim = new h2d.Anim(tiles, this);
     anim.scale(0.25);
     var label = new h2d.Text(hxd.res.DefaultFont.get(), this);

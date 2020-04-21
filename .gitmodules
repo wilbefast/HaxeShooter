@@ -1,0 +1,3 @@
+[submodule "SixPacker"]
+	path = SixPacker
+	url = https://github.com/wilbefast/SixPacker
