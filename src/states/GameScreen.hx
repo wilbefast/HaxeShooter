@@ -24,7 +24,7 @@ class GameScreen extends State {
     zombieTimer = ZOMBIE_PERIOD;
 
     // create background
-    var tile = h2d.Tile.fromColor(0x101010, 1, 1);
+    var tile = h2d.Tile.fromColor(0xb6bfb0, 1, 1);
     var bitmap = new h2d.Bitmap(tile, this);
     bitmap.scaleX = State.WIDTH;
     bitmap.scaleY = State.HEIGHT;

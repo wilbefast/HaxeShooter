@@ -37,6 +37,13 @@ class Zombie extends Entity {
   private var hitpoints : Int = MAX_HITPOINTS;
   private var stunDuration : Float = 0.0;
 
+  // visuals
+  private var currentAnim : h2d.Anim;
+  private var animUp : h2d.Anim;
+  private var animDown : h2d.Anim;
+  private var animLeft : h2d.Anim;
+  private var animRight : h2d.Anim;
+
   // ------------------------------------------------------------
   // CONSTRUCTOR
   // ------------------------------------------------------------
@@ -50,22 +57,38 @@ class Zombie extends Entity {
     x = args.x;
     y = args.y;
     
+    // phyics
     maxSpeed = MAX_SPEED;
     friction = HIGH_FRICTION;
-
     collider = new EntityCollider(this, RADIUS);
 
-    var tile = h2d.Tile.fromColor(0x00FF00, 1, 1);
-    tile.dx = tile.dy = -0.5;
-    var bitmap = new h2d.Bitmap(tile, this);
-    bitmap.setScale(2*RADIUS);
+    // visuals
+    var atlas = hxd.Res.foreground;
+    var down = atlas.getAnim("zombie_down");
+    Useful.assert(down != null, "atlas must contain the 'zombie_down'");
+    animDown = new h2d.Anim(down, this);
+    animDown.x = -32;
+    animDown.y = 24;
+    currentAnim = animDown;
+    var up = atlas.getAnim("zombie_up");
+    Useful.assert(up != null, "atlas must contain the 'zombie_up'");
+    animUp = new h2d.Anim(up, this);
+    animUp.x = -32;
+    animUp.y = 24;
+    animUp.visible = false;
+    var side = atlas.getAnim("zombie_side");
+    Useful.assert(side != null, "atlas must contain the 'zombie_side'");
+    animLeft = new h2d.Anim(side, this);
+    animLeft.x = 32;
+    animLeft.y = 24;
+    animLeft.scaleX = -1;
+    animLeft.visible = false;
+    animRight = new h2d.Anim(side, this);
+    animRight.x = -32;
+    animRight.y = 24;
+    animRight.visible = false;
 
-    var label = new h2d.Text(hxd.res.DefaultFont.get(), this);
-    label.text = "X_X";
-    label.textAlign = Center;
-    label.color = new Vector(0, 0, 0);
-    label.y = -8;
-
+    // artificial intelligence
     target = cast(Entity.getFirst(function(entity) {
       return Std.is(entity, Avatar);
     }), Avatar);
@@ -96,6 +119,24 @@ class Zombie extends Entity {
       }
       speed = speed.add(moveDirection);
 
+      // choose animation
+      if(Math.abs(moveDirection.x) > Math.abs(moveDirection.y)) {
+        if(moveDirection.x < 0) {
+          setAnimation(animLeft);
+        }
+        else {
+          setAnimation(animRight);
+        }
+      }
+      else {
+        if(moveDirection.y < 0) {
+          setAnimation(animUp);
+        }
+        else {
+          setAnimation(animDown);
+        }
+      }
+
       // query other objects present in the scene
       Entity.map(function(other : Entity) {
         if(Std.is(other, Avatar)) {
@@ -117,6 +158,17 @@ class Zombie extends Entity {
     }
 
     super.update(dt);
+  }
+
+  // ------------------------------------------------------------
+  // VISUALS
+  // ------------------------------------------------------------
+
+  private function setAnimation(anim : h2d.Anim) {
+    currentAnim.visible = false;
+    anim.visible = true;
+    currentAnim = anim;
+    currentAnim.speed = 5;
   }
 
   // ------------------------------------------------------------

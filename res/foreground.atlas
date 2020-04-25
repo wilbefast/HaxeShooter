@@ -1,47 +1,89 @@
 foreground.png
-size: 384,224
+size: 128,384
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-anim_123
+player_down
  rotate: false
  xy: 0, 0
- size: 128, 128
+ size: 64, 64
  orig: 0, 0
  offset: 0, 0
  index: 0
-anim_123
+player_down
  rotate: false
- xy: 128, 0
- size: 128, 128
+ xy: 64, 0
+ size: 64, 64
  orig: 0, 0
  offset: 0, 0
  index: 1
-anim_123
+player_side
  rotate: false
- xy: 256, 0
- size: 128, 128
+ xy: 0, 64
+ size: 64, 64
  orig: 0, 0
  offset: 0, 0
- index: 2
-anim_ABC
+ index: 0
+player_side
+ rotate: false
+ xy: 64, 64
+ size: 64, 64
+ orig: 0, 0
+ offset: 0, 0
+ index: 1
+player_up
  rotate: false
  xy: 0, 128
- size: 96, 96
+ size: 64, 64
  orig: 0, 0
  offset: 0, 0
  index: 0
-anim_ABC
+player_up
  rotate: false
- xy: 96, 128
- size: 96, 96
+ xy: 64, 128
+ size: 64, 64
  orig: 0, 0
  offset: 0, 0
  index: 1
-anim_ABC
+zombie_down
  rotate: false
- xy: 192, 128
- size: 96, 96
+ xy: 0, 192
+ size: 64, 64
  orig: 0, 0
  offset: 0, 0
- index: 2
+ index: 0
+zombie_down
+ rotate: false
+ xy: 64, 192
+ size: 64, 64
+ orig: 0, 0
+ offset: 0, 0
+ index: 1
+zombie_side
+ rotate: false
+ xy: 0, 256
+ size: 64, 64
+ orig: 0, 0
+ offset: 0, 0
+ index: 0
+zombie_side
+ rotate: false
+ xy: 64, 256
+ size: 64, 64
+ orig: 0, 0
+ offset: 0, 0
+ index: 1
+zombie_up
+ rotate: false
+ xy: 0, 320
+ size: 64, 64
+ orig: 0, 0
+ offset: 0, 0
+ index: 0
+zombie_up
+ rotate: false
+ xy: 64, 320
+ size: 64, 64
+ orig: 0, 0
+ offset: 0, 0
+ index: 1

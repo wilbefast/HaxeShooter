@@ -45,6 +45,13 @@ class Avatar extends Entity {
   public var score(default, null) : Int = 0;
   private var scoreLabel : h2d.Text;
 
+  // visuals
+  private var currentAnim : h2d.Anim;
+  private var animUp : h2d.Anim;
+  private var animDown : h2d.Anim;
+  private var animLeft : h2d.Anim;
+  private var animRight : h2d.Anim;
+
   // ------------------------------------------------------------
   // CONSTRUCTOR
   // ------------------------------------------------------------
@@ -65,15 +72,29 @@ class Avatar extends Entity {
 
     // visuals
     var atlas = hxd.Res.foreground;
-    var tiles = atlas.getAnim("anim_123");
-    Useful.assert(tiles != null, "atlas must contain the specified animation");
-    var anim = new h2d.Anim(tiles, this);
-    anim.scale(0.25);
-    var label = new h2d.Text(hxd.res.DefaultFont.get(), this);
-    label.text = "0_0";
-    label.textAlign = Center;
-    label.color = new Vector(0, 0, 0);
-    label.y = -8;
+    var down = atlas.getAnim("player_down");
+    Useful.assert(down != null, "atlas must contain the 'player_down'");
+    animDown = new h2d.Anim(down, this);
+    animDown.x = -32;
+    animDown.y = 24;
+    currentAnim = animDown;
+    var up = atlas.getAnim("player_up");
+    Useful.assert(up != null, "atlas must contain the 'player_up'");
+    animUp = new h2d.Anim(up, this);
+    animUp.x = -32;
+    animUp.y = 24;
+    animUp.visible = false;
+    var side = atlas.getAnim("player_side");
+    Useful.assert(side != null, "atlas must contain the 'player_side'");
+    animLeft = new h2d.Anim(side, this);
+    animLeft.x = 32;
+    animLeft.y = 24;
+    animLeft.scaleX = -1;
+    animLeft.visible = false;
+    animRight = new h2d.Anim(side, this);
+    animRight.x = -32;
+    animRight.y = 24;
+    animRight.visible = false;
 
     // score
     scoreLabel = new h2d.Text(State.smallFont, args.parent);
@@ -110,9 +131,8 @@ class Avatar extends Entity {
       reloadTime = TIME_BETWEEN_BULLETS;
     }
 
-    // character acceleration
+    // character desired direction
     moveDirection.set(0, 0);
-
     if (Key.isDown(Key.LEFT) ||  Key.isDown(Key.A) || Key.isDown(Key.Q)) {
       moveDirection.x -= 1;
     }
@@ -125,7 +145,26 @@ class Avatar extends Entity {
     if (Key.isDown(Key.DOWN) || Key.isDown(Key.S)) {
       moveDirection.y += 1;
     }
+
+    // choose animation
+    if(Math.abs(moveDirection.x) > Math.abs(moveDirection.y)) {
+      if(moveDirection.x < 0) {
+        setAnimation(animLeft);
+      }
+      else {
+        setAnimation(animRight);
+      }
+    }
+    else {
+      if(moveDirection.y < 0) {
+        setAnimation(animUp);
+      }
+      else {
+        setAnimation(animDown);
+      }
+    }
     
+    // character acceleration
     var norm = moveDirection.length();
     if(norm < 0.01) {
       moveDirection.set(0, 0, 0);
@@ -136,10 +175,22 @@ class Avatar extends Entity {
       friction = LOW_FRICTION;
     }
 
+    // update speed
     speed = speed.add(moveDirection);
 
     // update position
     super.update(dt); 
+  }
+
+  // ------------------------------------------------------------
+  // VISUALS
+  // ------------------------------------------------------------
+
+  private function setAnimation(anim : h2d.Anim) {
+    currentAnim.visible = false;
+    anim.visible = true;
+    currentAnim = anim;
+    currentAnim.speed = 5;
   }
 
   // ------------------------------------------------------------
