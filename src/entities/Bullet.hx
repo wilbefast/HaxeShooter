@@ -7,7 +7,6 @@ class Bullet extends Entity {
   // ------------------------------------------------------------
 
   private static inline var RADIUS = 24.0;
-  private static inline var SPRITE_DIAMETER = RADIUS*1.2;
   private static inline var SPEED = 2000.0;
   private static inline var LIFESPAN = 1.0;
 
@@ -16,7 +15,7 @@ class Bullet extends Entity {
   // ------------------------------------------------------------
 
   private var direction = new Vector(0, 0, 0);
-  private var bitmap : h2d.Bitmap;
+  private var anim : h2d.Anim;
 
   // ------------------------------------------------------------
   // CONSTRUCTOR
@@ -25,12 +24,16 @@ class Bullet extends Entity {
   public function new(source : Entity, direction : Vector) {
     super(source.parent);
 
-    // visual
-    var tile = h2d.Tile.fromColor(0xFFFF00, 1, 1);
-    tile.dx = tile.dy = -0.5;
-    bitmap = new h2d.Bitmap(tile, this);
-    bitmap.setScale(SPRITE_DIAMETER);
-    
+    var atlas = hxd.Res.foreground;
+    var bullet = atlas.getAnim("bullet");
+    Useful.assert(bullet != null, "atlas must contain the 'bullet'");
+    anim = new h2d.Anim(bullet, this);
+    for(t in anim.frames) {
+      t.dx = t.dy = -24;
+    }
+    anim.speed = 10;
+    anim.rotate(Math.atan2(direction.x, -direction.y) - Math.PI*0.5);
+
     // speed
     x = source.x;
     y = source.y;
@@ -42,8 +45,8 @@ class Bullet extends Entity {
 
     // muzzle flash
     var flash = new MuzzleFlash(this);
-    flash.x += direction.x * SPRITE_DIAMETER;
-    flash.y += direction.y * SPRITE_DIAMETER;
+    flash.x += direction.x * RADIUS;
+    flash.y += direction.y * RADIUS;
   }
 
   // ------------------------------------------------------------

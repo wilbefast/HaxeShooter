@@ -2,38 +2,26 @@ class MuzzleFlash extends Entity {
   private static inline var DURATION = 0.07;
   private static inline var RADIUS = 32;
 
-  private var timer : Float;
-  private var bitmap : h2d.Bitmap;
-
   public function new(bullet : Bullet) {
     super(bullet.parent);
     x = bullet.x;
     y = bullet.y;
 
-    // visual
-    var tile = h2d.Tile.fromColor(0xFFFF00, 1, 1);
-    tile.dx = tile.dy = -0.5;
-    bitmap = new h2d.Bitmap(tile, this);
-    bitmap.setScale(RADIUS*2);
-    bitmap.alpha = 0.7;
+    // visuals
+    var atlas = hxd.Res.foreground;
+    var muzzle_flash = atlas.getAnim("muzzle_flash");
+    Useful.assert(muzzle_flash != null, "atlas must contain the 'muzzle_flash'");
+    var anim = new h2d.Anim(muzzle_flash, this);
+    for(t in anim.frames) {
+      t.dx = t.dy = -48;
+    }
+    anim.speed = 10;
+    anim.loop = false;
+    anim.onAnimEnd = function() {
+      purge = true;
+    }
 
     // audio
     hxd.Res.shoot.play(false, 0.1);
-
-    // decay
-    timer = DURATION;
   }
-
-  public override function update(dt : Float) {
-    // particle effect
-    timer -= dt;
-    if(timer <= 0) {
-      purge = true;
-    }
-    else {
-      var progress = 1 - timer/DURATION;
-      bitmap.setScale(Useful.lerp(RADIUS, RADIUS*2, progress));
-    }
-  }
-
 }
