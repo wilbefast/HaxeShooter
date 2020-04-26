@@ -18,7 +18,7 @@ class Wall extends Entity {
   public var height(default, null) : Float;
 
   public function new(args : {
-    parent : Object,
+    parent : h2d.Layers,
     x : Float,
     y : Float,
     width : Float,

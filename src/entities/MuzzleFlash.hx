@@ -3,7 +3,7 @@ class MuzzleFlash extends Entity {
   private static inline var RADIUS = 32;
 
   public function new(bullet : Bullet) {
-    super(bullet.parent);
+    super(cast(bullet.parent, h2d.Layers));
     x = bullet.x;
     y = bullet.y;
 

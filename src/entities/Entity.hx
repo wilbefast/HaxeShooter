@@ -73,7 +73,7 @@ class Entity extends h2d.Object {
   // CONSTRUCTOR
   // ------------------------------------------------------------
 
-  public function new(parent : h2d.Object) {
+  public function new(parent : h2d.Layers) {
     Useful.assert(parent != null, 'parent must be non-null');
     super(parent);
 

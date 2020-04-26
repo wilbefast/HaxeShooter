@@ -25,7 +25,7 @@ class Bullet extends Entity {
   // ------------------------------------------------------------
 
   public function new(source : Entity, direction : Vector) {
-    super(source.parent);
+    super(cast(source.parent, h2d.Layers));
 
     // trail
     trailTimer = 0;

@@ -3,7 +3,7 @@ class ZombieGibs extends Entity {
   private static inline var RADIUS = 48;
 
   public function new(zombie : Zombie) {
-    super(zombie.parent);
+    super(cast(zombie.parent, h2d.Layers));
     x = zombie.x;
     y = zombie.y;
 

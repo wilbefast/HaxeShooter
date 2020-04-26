@@ -82,6 +82,7 @@ class GameScreen extends State {
     Entity.updateAll(dt);
     EntityCollider.generateCollisions(dt);
 
+    
     // spawn zombies periodically
     zombieTimer -= dt;
     if(zombieTimer <= 0) {
@@ -93,5 +94,8 @@ class GameScreen extends State {
         y : State.HEIGHT * (0.5 + Math.sin(angle))
       });
     }
+
+    // sort children by y-axis
+    ysort(0);
   }
 }

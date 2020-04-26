@@ -1,7 +1,7 @@
 import format.gif.Data.Frame;
 import h2d.Scene;
 
-class State extends h2d.Object {
+class State extends h2d.Layers {
 
   // ------------------------------------------------------------
   // CONSTANTS

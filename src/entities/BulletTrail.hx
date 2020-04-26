@@ -1,7 +1,7 @@
 class BulletTrail extends Entity {
 
   public function new(bullet : Bullet) {
-    super(bullet.parent);
+    super(cast(bullet.parent, h2d.Layers));
     x = bullet.x;
     y = bullet.y;
 

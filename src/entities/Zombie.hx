@@ -50,7 +50,7 @@ class Zombie extends Entity {
   // ------------------------------------------------------------
 
   public function new(args : {
-    parent : h2d.Object,
+    parent : h2d.Layers,
     x : Float,
     y : Float
   }) {
