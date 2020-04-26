@@ -7,8 +7,9 @@ class Bullet extends Entity {
   // ------------------------------------------------------------
 
   private static inline var RADIUS = 24.0;
-  private static inline var SPEED = 2000.0;
-  private static inline var LIFESPAN = 1.0;
+  private static inline var INITIAL_SPEED = 500.0;
+  private static inline var MAX_SPEED = 2000.0;
+  private static inline var TRAIL_PERIOD = 0.01;
 
   // ------------------------------------------------------------
   // ATTRIBUTES
@@ -16,6 +17,8 @@ class Bullet extends Entity {
 
   private var direction = new Vector(0, 0, 0);
   private var anim : h2d.Anim;
+
+  private var trailTimer : Float;
 
   // ------------------------------------------------------------
   // CONSTRUCTOR
@@ -34,11 +37,15 @@ class Bullet extends Entity {
     anim.speed = 10;
     anim.rotate(Math.atan2(direction.x, -direction.y) - Math.PI*0.5);
 
+    // trail
+    trailTimer = 0;
+
     // speed
+    maxSpeed = MAX_SPEED;
     x = source.x;
     y = source.y;
     speed.load(direction);
-    speed.scale3(SPEED);
+    speed.scale3(INITIAL_SPEED);
 
     // collisions
     collider = new EntityCollider(this, RADIUS);
@@ -56,6 +63,28 @@ class Bullet extends Entity {
   public override function update(dt : Float) {
     // movement
     super.update(dt);
+
+    // trail
+    trailTimer -= dt;
+    if(trailTimer < 0) {
+      var overlap = -trailTimer/TRAIL_PERIOD;
+      var endX = x;
+      var endY = y;
+      
+      for(i in 0 ... Math.floor(overlap)) {
+        var k = cast(i, Float) / overlap;
+        x = Useful.lerp(prevX, endX, k);
+        y = Useful.lerp(prevY, endY, k);
+        var trail = new BulletTrail(this);
+        trailTimer += TRAIL_PERIOD;
+      }
+
+      x = endX;
+      y = endY;
+    }
+
+    // accelerate
+    speed.scale3(1 + 2*dt);
   }
 
   // ------------------------------------------------------------

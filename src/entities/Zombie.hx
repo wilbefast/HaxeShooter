@@ -43,6 +43,7 @@ class Zombie extends Entity {
   private var animDown : h2d.Anim;
   private var animLeft : h2d.Anim;
   private var animRight : h2d.Anim;
+  private var animShadow : h2d.Anim;
 
   // ------------------------------------------------------------
   // CONSTRUCTOR
@@ -64,6 +65,11 @@ class Zombie extends Entity {
 
     // visuals
     var atlas = hxd.Res.foreground;
+    var shadow = atlas.getAnim("zombie_shadow");
+    Useful.assert(shadow != null, "atlas must contain the 'zombie_shadow'");
+    animShadow = new h2d.Anim(shadow, this);
+    animShadow.x = -24;
+    animShadow.y = 30;
     var down = atlas.getAnim("zombie_down");
     Useful.assert(down != null, "atlas must contain the 'zombie_down'");
     animDown = new h2d.Anim(down, this);

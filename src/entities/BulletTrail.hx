@@ -1,0 +1,27 @@
+class BulletTrail extends Entity {
+
+  public function new(bullet : Bullet) {
+    super(bullet.parent);
+    x = bullet.x;
+    y = bullet.y;
+
+    // visuals
+    var atlas = hxd.Res.foreground;
+    var trail = atlas.getAnim("trail");
+    Useful.assert(trail != null, "atlas must contain the 'trail'");
+    var anim = new h2d.Anim(trail, this);
+    for(t in anim.frames) {
+      t.dx = t.dy = -16;
+    }
+    anim.speed = 15 + 4*Math.random();
+    anim.loop = false;
+    anim.onAnimEnd = function() {
+      purge = true;
+    }
+
+    // push away
+    speed.load(bullet.speed);
+    speed.scale3(-0.5);
+    friction = 1000;
+  }
+}

@@ -51,6 +51,7 @@ class Avatar extends Entity {
   private var animDown : h2d.Anim;
   private var animLeft : h2d.Anim;
   private var animRight : h2d.Anim;
+  private var animShadow : h2d.Anim;
 
   // ------------------------------------------------------------
   // CONSTRUCTOR
@@ -72,6 +73,11 @@ class Avatar extends Entity {
 
     // visuals
     var atlas = hxd.Res.foreground;
+    var shadow = atlas.getAnim("player_shadow");
+    Useful.assert(shadow != null, "atlas must contain the 'player_shadow'");
+    animShadow = new h2d.Anim(shadow, this);
+    animShadow.x = -16;
+    animShadow.y = 48;
     var down = atlas.getAnim("player_down");
     Useful.assert(down != null, "atlas must contain the 'player_down'");
     animDown = new h2d.Anim(down, this);
@@ -88,7 +94,7 @@ class Avatar extends Entity {
     Useful.assert(side != null, "atlas must contain the 'player_side'");
     animLeft = new h2d.Anim(side, this);
     animLeft.x = 32;
-    animLeft.y = 24;
+    animLeft.y = 0;
     animLeft.scaleX = -1;
     animLeft.visible = false;
     animRight = new h2d.Anim(side, this);
