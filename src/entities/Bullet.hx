@@ -27,16 +27,6 @@ class Bullet extends Entity {
   public function new(source : Entity, direction : Vector) {
     super(source.parent);
 
-    var atlas = hxd.Res.foreground;
-    var bullet = atlas.getAnim("bullet");
-    Useful.assert(bullet != null, "atlas must contain the 'bullet'");
-    anim = new h2d.Anim(bullet, this);
-    for(t in anim.frames) {
-      t.dx = t.dy = -24;
-    }
-    anim.speed = 10;
-    anim.rotate(Math.atan2(direction.x, -direction.y) - Math.PI*0.5);
-
     // trail
     trailTimer = 0;
 
@@ -54,6 +44,40 @@ class Bullet extends Entity {
     var flash = new MuzzleFlash(this);
     flash.x += direction.x * RADIUS;
     flash.y += direction.y * RADIUS;
+
+    // visuals
+    var atlas = hxd.Res.foreground;
+    var shadow = atlas.getAnim("bullet_shadow");
+    Useful.assert(shadow != null, "atlas must contain the 'bullet_shadow'");
+    var animShadow = new h2d.Anim(shadow, this);
+    animShadow.x = -12;
+    animShadow.y = 32;
+    if(Math.abs(speed.x) > 1.7*Math.abs(speed.y)) {
+      var frames = atlas.getAnim("bullet_side");
+      Useful.assert(frames != null, "atlas must contain the 'bullet_side'");
+      var anim = new h2d.Anim(frames, this);
+      anim.x = -16;
+      anim.y = 16;
+      if(speed.x < 0) {
+        anim.scaleX = -1;
+      }
+    }
+    else {
+      if(speed.y < 0) {
+        var frames = atlas.getAnim("bullet_up");
+        Useful.assert(frames != null, "atlas must contain the 'bullet_up'");
+        var anim = new h2d.Anim(frames, this);
+        anim.x = -16;
+        anim.y = 16;
+      }
+      else {
+        var frames = atlas.getAnim("bullet_down");
+        Useful.assert(frames != null, "atlas must contain the 'bullet_down'");
+        var anim = new h2d.Anim(frames, this);
+        anim.x = -16;
+        anim.y = 16;
+      }
+    }
   }
 
   // ------------------------------------------------------------
