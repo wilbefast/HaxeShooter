@@ -234,6 +234,20 @@ player_down
  orig: 0, 0
  offset: 0, 0
  index: 1
+player_down
+ rotate: false
+ xy: 128, 400
+ size: 64, 64
+ orig: 0, 0
+ offset: 0, 0
+ index: 2
+player_down
+ rotate: false
+ xy: 192, 400
+ size: 64, 64
+ orig: 0, 0
+ offset: 0, 0
+ index: 3
 player_shadow
  rotate: false
  xy: 0, 464
@@ -269,6 +283,20 @@ player_side
  orig: 0, 0
  offset: 0, 0
  index: 1
+player_side
+ rotate: false
+ xy: 128, 488
+ size: 64, 64
+ orig: 0, 0
+ offset: 0, 0
+ index: 2
+player_side
+ rotate: false
+ xy: 192, 488
+ size: 64, 64
+ orig: 0, 0
+ offset: 0, 0
+ index: 3
 player_up
  rotate: false
  xy: 0, 552
@@ -283,6 +311,20 @@ player_up
  orig: 0, 0
  offset: 0, 0
  index: 1
+player_up
+ rotate: false
+ xy: 128, 552
+ size: 64, 64
+ orig: 0, 0
+ offset: 0, 0
+ index: 2
+player_up
+ rotate: false
+ xy: 192, 552
+ size: 64, 64
+ orig: 0, 0
+ offset: 0, 0
+ index: 3
 trail
  rotate: false
  xy: 0, 616

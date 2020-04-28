@@ -94,7 +94,7 @@ class Avatar extends Entity {
     Useful.assert(side != null, "atlas must contain the 'player_side'");
     animLeft = new h2d.Anim(side, this);
     animLeft.x = 32;
-    animLeft.y = 0;
+    animLeft.y = 24;
     animLeft.scaleX = -1;
     animLeft.visible = false;
     animRight = new h2d.Anim(side, this);
@@ -196,7 +196,7 @@ class Avatar extends Entity {
     currentAnim.visible = false;
     anim.visible = true;
     currentAnim = anim;
-    currentAnim.speed = 5;
+    currentAnim.speed = 7;
   }
 
   // ------------------------------------------------------------
