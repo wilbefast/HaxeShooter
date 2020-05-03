@@ -1,5 +1,5 @@
 foreground.png
-size: 896,968
+size: 1024,968
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
@@ -437,6 +437,13 @@ zombie_gibs
  orig: 0, 0
  offset: 0, 0
  index: 6
+zombie_gibs
+ rotate: false
+ xy: 896, 680
+ size: 128, 128
+ orig: 0, 0
+ offset: 0, 0
+ index: 7
 zombie_shadow
  rotate: false
  xy: 0, 808
