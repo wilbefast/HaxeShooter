@@ -28,10 +28,18 @@ class GameScreen extends State {
     zombieTimer = zombiePeriod;
 
     // create backgroundeate background
-    var tile = h2d.Tile.fromColor(0xe08d74, 1, 1);
-    var bitmap = new h2d.Bitmap(tile, this);
-    bitmap.scaleX = State.WIDTH;
-    bitmap.scaleY = State.HEIGHT;
+    var background = new h2d.Object(this);
+    var backgroundTile = hxd.Res.concrete.toTile();
+    var x = 0.0;
+    while(x < State.WIDTH) {
+      var y = 0.0;
+      while(y < State.HEIGHT) {
+        var backgroundBitmap = new h2d.Bitmap(backgroundTile, background);
+        backgroundBitmap.setPosition(x, y);
+        y += backgroundTile.height;
+      }
+      x += backgroundTile.width;
+    }
 
     // create walls
     wallNorth = new Wall({
