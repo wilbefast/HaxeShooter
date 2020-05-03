@@ -21,6 +21,7 @@ class Avatar extends Entity {
 
   // movement
   private static inline var HIGH_FRICTION = 5000.0;
+  private static inline var MEDIUM_FRICTION = 500.0;
   private static inline var LOW_FRICTION = 10;
   private static inline var ACCELERATION = 5000.0;
   private static inline var MAX_SPEED = 1000.0;
@@ -35,6 +36,7 @@ class Avatar extends Entity {
 
   // control
   private var moveDirection = new Vector(0, 0, 0);
+  private var isGrappled = false;
 
   // weapon
   private var weaponTarget = new Vector(0, 0, 0);
@@ -178,7 +180,15 @@ class Avatar extends Entity {
     }
     else {
       moveDirection.scale3(ACCELERATION / norm * dt);
-      friction = LOW_FRICTION;
+      if(isGrappled) {
+        friction = HIGH_FRICTION;    
+      }
+      else if(isFiring) {
+        friction = MEDIUM_FRICTION;
+      }
+      else {
+        friction = LOW_FRICTION;
+      }
     }
 
     // update speed
@@ -186,6 +196,9 @@ class Avatar extends Entity {
 
     // update position
     super.update(dt); 
+
+    // reset grapple flag
+    isGrappled = false;
   }
 
   // ------------------------------------------------------------
@@ -223,6 +236,9 @@ class Avatar extends Entity {
           speed.y *= -1;
         case _:
       }
+    }
+    else if(Std.is(other, Zombie)){
+      isGrappled = true;
     }
   }
 

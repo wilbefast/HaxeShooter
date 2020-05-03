@@ -1,8 +1,11 @@
 class GameScreen extends State {
 
-  private static inline var ZOMBIE_PERIOD = 1.0;
+  private static inline var ZOMBIE_INITIAL_PERIOD = 1.5;
+  private static inline var ZOMBIE_PERIOD_DECREASE = 0.02;
+  private static inline var ZOMBIE_MINIMUM_PERIOD = 0.1;
   private static inline var ZOMBIE_DISTANCE = 50.0;
 
+  private var zombiePeriod : Float;
   private var avatar : Avatar;
   private var wallNorth : Wall;
   private var wallSouth : Wall;
@@ -21,9 +24,10 @@ class GameScreen extends State {
     State.score = 0;
 
     // reset zombie timer
-    zombieTimer = ZOMBIE_PERIOD;
+    zombiePeriod = ZOMBIE_INITIAL_PERIOD;
+    zombieTimer = zombiePeriod;
 
-    // create background
+    // create backgroundeate background
     var tile = h2d.Tile.fromColor(0xe08d74, 1, 1);
     var bitmap = new h2d.Bitmap(tile, this);
     bitmap.scaleX = State.WIDTH;
@@ -86,7 +90,8 @@ class GameScreen extends State {
     // spawn zombies periodically
     zombieTimer -= dt;
     if(zombieTimer <= 0) {
-      zombieTimer = ZOMBIE_PERIOD;
+      zombieTimer = zombiePeriod;
+      zombiePeriod = Math.max(ZOMBIE_MINIMUM_PERIOD, zombiePeriod - ZOMBIE_PERIOD_DECREASE);
       var angle = Math.random() * Math.PI * 2;
       var zombie = new Zombie({
         parent : this,

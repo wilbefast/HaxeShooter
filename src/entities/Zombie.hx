@@ -11,7 +11,7 @@ class Zombie extends Entity {
   private static inline var RADIUS = 16;
   private static inline var COLLISION_STUN_DURATION = 0.2;
   private static inline var ZOMBIE_COLLISION_KNOCKBACK = 200;
-  private static inline var AVATAR_COLLISION_KNOCKBACK = 100;
+  private static inline var AVATAR_COLLISION_KNOCKBACK = 10;
   private static inline var MAX_REPULSION = 0.7;
   private static inline var REPULSION_RANGE = RADIUS*6;
 
@@ -224,17 +224,23 @@ class Zombie extends Entity {
           hxd.Res.gameover.play(false, 0.1);
         }
         else {
-          // knock-back
+          // slow other
+          other.speed.scale3(0.4);
+
+          // knock-back other
           moveDirection.set(other.x - x, other.y - y);
           moveDirection.scale3(AVATAR_COLLISION_KNOCKBACK);
           other.speed = other.speed.add(moveDirection);
         }
       }
 
-      // knock-back
+      // knock-back self
       moveDirection.set(x - other.x, y - other.y);
       moveDirection.scale3(ZOMBIE_COLLISION_KNOCKBACK);
       speed = speed.add(moveDirection).add(other.speed);
+
+      // stun
+      stunDuration = COLLISION_STUN_DURATION;
     }
   }
 }
