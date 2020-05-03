@@ -1,3 +1,5 @@
+import h3d.Vector;
+
 class BulletTrail extends Entity {
 
   public function new(bullet : Bullet) {
@@ -22,6 +24,8 @@ class BulletTrail extends Entity {
     // push away
     speed.load(bullet.speed);
     speed.scale3(-0.5);
-    friction = 1000;
+    speed.x += (Math.random() - 0.5)*100;
+    speed.y += (Math.random() - 0.5)*100;
+    friction = 100;
   }
 }
