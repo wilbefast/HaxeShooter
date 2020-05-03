@@ -1,5 +1,5 @@
 foreground.png
-size: 896,1000
+size: 896,968
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
@@ -104,412 +104,412 @@ bullet_up
 explosion
  rotate: false
  xy: 0, 112
- size: 128, 128
+ size: 128, 96
  orig: 0, 0
  offset: 0, 0
  index: 0
 explosion
  rotate: false
  xy: 128, 112
- size: 128, 128
+ size: 128, 96
  orig: 0, 0
  offset: 0, 0
  index: 1
 explosion
  rotate: false
  xy: 256, 112
- size: 128, 128
+ size: 128, 96
  orig: 0, 0
  offset: 0, 0
  index: 2
 explosion
  rotate: false
  xy: 384, 112
- size: 128, 128
+ size: 128, 96
  orig: 0, 0
  offset: 0, 0
  index: 3
 explosion
  rotate: false
  xy: 512, 112
- size: 128, 128
+ size: 128, 96
  orig: 0, 0
  offset: 0, 0
  index: 4
 explosion
  rotate: false
  xy: 640, 112
- size: 128, 128
+ size: 128, 96
  orig: 0, 0
  offset: 0, 0
  index: 5
 explosion
  rotate: false
  xy: 768, 112
- size: 128, 128
+ size: 128, 96
  orig: 0, 0
  offset: 0, 0
  index: 6
 impact
  rotate: false
- xy: 0, 240
+ xy: 0, 208
  size: 64, 64
  orig: 0, 0
  offset: 0, 0
  index: 0
 impact
  rotate: false
- xy: 64, 240
+ xy: 64, 208
  size: 64, 64
  orig: 0, 0
  offset: 0, 0
  index: 1
 impact
  rotate: false
- xy: 128, 240
+ xy: 128, 208
  size: 64, 64
  orig: 0, 0
  offset: 0, 0
  index: 2
 impact
  rotate: false
- xy: 192, 240
+ xy: 192, 208
  size: 64, 64
  orig: 0, 0
  offset: 0, 0
  index: 3
 impact
  rotate: false
- xy: 256, 240
+ xy: 256, 208
  size: 64, 64
  orig: 0, 0
  offset: 0, 0
  index: 4
 impact
  rotate: false
- xy: 320, 240
+ xy: 320, 208
  size: 64, 64
  orig: 0, 0
  offset: 0, 0
  index: 5
 muzzle_flash
  rotate: false
- xy: 0, 304
+ xy: 0, 272
  size: 96, 96
  orig: 0, 0
  offset: 0, 0
  index: 0
 muzzle_flash
  rotate: false
- xy: 96, 304
+ xy: 96, 272
  size: 96, 96
  orig: 0, 0
  offset: 0, 0
  index: 1
 muzzle_flash
  rotate: false
- xy: 192, 304
+ xy: 192, 272
  size: 96, 96
  orig: 0, 0
  offset: 0, 0
  index: 2
 muzzle_flash
  rotate: false
- xy: 288, 304
+ xy: 288, 272
  size: 96, 96
  orig: 0, 0
  offset: 0, 0
  index: 3
 player_down
  rotate: false
- xy: 0, 400
+ xy: 0, 368
  size: 64, 64
  orig: 0, 0
  offset: 0, 0
  index: 0
 player_down
  rotate: false
- xy: 64, 400
+ xy: 64, 368
  size: 64, 64
  orig: 0, 0
  offset: 0, 0
  index: 1
 player_down
  rotate: false
- xy: 128, 400
+ xy: 128, 368
  size: 64, 64
  orig: 0, 0
  offset: 0, 0
  index: 2
 player_down
  rotate: false
- xy: 192, 400
+ xy: 192, 368
  size: 64, 64
  orig: 0, 0
  offset: 0, 0
  index: 3
 player_shadow
  rotate: false
- xy: 0, 464
+ xy: 0, 432
  size: 32, 24
  orig: 0, 0
  offset: 0, 0
  index: 0
 player_shadow
  rotate: false
- xy: 32, 464
+ xy: 32, 432
  size: 32, 24
  orig: 0, 0
  offset: 0, 0
  index: 1
 player_shadow
  rotate: false
- xy: 64, 464
+ xy: 64, 432
  size: 32, 24
  orig: 0, 0
  offset: 0, 0
  index: 2
 player_side
  rotate: false
- xy: 0, 488
+ xy: 0, 456
  size: 64, 64
  orig: 0, 0
  offset: 0, 0
  index: 0
 player_side
  rotate: false
- xy: 64, 488
+ xy: 64, 456
  size: 64, 64
  orig: 0, 0
  offset: 0, 0
  index: 1
 player_side
  rotate: false
- xy: 128, 488
+ xy: 128, 456
  size: 64, 64
  orig: 0, 0
  offset: 0, 0
  index: 2
 player_side
  rotate: false
- xy: 192, 488
+ xy: 192, 456
  size: 64, 64
  orig: 0, 0
  offset: 0, 0
  index: 3
 player_up
  rotate: false
- xy: 0, 552
+ xy: 0, 520
  size: 64, 64
  orig: 0, 0
  offset: 0, 0
  index: 0
 player_up
  rotate: false
- xy: 64, 552
+ xy: 64, 520
  size: 64, 64
  orig: 0, 0
  offset: 0, 0
  index: 1
 player_up
  rotate: false
- xy: 128, 552
+ xy: 128, 520
  size: 64, 64
  orig: 0, 0
  offset: 0, 0
  index: 2
 player_up
  rotate: false
- xy: 192, 552
+ xy: 192, 520
  size: 64, 64
  orig: 0, 0
  offset: 0, 0
  index: 3
 trail
+ rotate: false
+ xy: 0, 584
+ size: 32, 32
+ orig: 0, 0
+ offset: 0, 0
+ index: 0
+trail
+ rotate: false
+ xy: 32, 584
+ size: 32, 32
+ orig: 0, 0
+ offset: 0, 0
+ index: 1
+trail
+ rotate: false
+ xy: 64, 584
+ size: 32, 32
+ orig: 0, 0
+ offset: 0, 0
+ index: 2
+trail
+ rotate: false
+ xy: 96, 584
+ size: 32, 32
+ orig: 0, 0
+ offset: 0, 0
+ index: 3
+trail
+ rotate: false
+ xy: 128, 584
+ size: 32, 32
+ orig: 0, 0
+ offset: 0, 0
+ index: 4
+zombie_down
  rotate: false
  xy: 0, 616
- size: 32, 32
+ size: 64, 64
  orig: 0, 0
  offset: 0, 0
  index: 0
-trail
- rotate: false
- xy: 32, 616
- size: 32, 32
- orig: 0, 0
- offset: 0, 0
- index: 1
-trail
+zombie_down
  rotate: false
  xy: 64, 616
- size: 32, 32
+ size: 64, 64
  orig: 0, 0
  offset: 0, 0
- index: 2
-trail
- rotate: false
- xy: 96, 616
- size: 32, 32
- orig: 0, 0
- offset: 0, 0
- index: 3
-trail
+ index: 1
+zombie_down
  rotate: false
  xy: 128, 616
- size: 32, 32
- orig: 0, 0
- offset: 0, 0
- index: 4
-zombie_down
- rotate: false
- xy: 0, 648
- size: 64, 64
- orig: 0, 0
- offset: 0, 0
- index: 0
-zombie_down
- rotate: false
- xy: 64, 648
- size: 64, 64
- orig: 0, 0
- offset: 0, 0
- index: 1
-zombie_down
- rotate: false
- xy: 128, 648
  size: 64, 64
  orig: 0, 0
  offset: 0, 0
  index: 2
 zombie_down
  rotate: false
- xy: 192, 648
+ xy: 192, 616
  size: 64, 64
  orig: 0, 0
  offset: 0, 0
  index: 3
 zombie_gibs
  rotate: false
- xy: 0, 712
+ xy: 0, 680
  size: 128, 128
  orig: 0, 0
  offset: 0, 0
  index: 0
 zombie_gibs
  rotate: false
- xy: 128, 712
+ xy: 128, 680
  size: 128, 128
  orig: 0, 0
  offset: 0, 0
  index: 1
 zombie_gibs
  rotate: false
- xy: 256, 712
+ xy: 256, 680
  size: 128, 128
  orig: 0, 0
  offset: 0, 0
  index: 2
 zombie_gibs
  rotate: false
- xy: 384, 712
+ xy: 384, 680
  size: 128, 128
  orig: 0, 0
  offset: 0, 0
  index: 3
 zombie_gibs
  rotate: false
- xy: 512, 712
+ xy: 512, 680
  size: 128, 128
  orig: 0, 0
  offset: 0, 0
  index: 4
 zombie_gibs
  rotate: false
- xy: 640, 712
+ xy: 640, 680
  size: 128, 128
  orig: 0, 0
  offset: 0, 0
  index: 5
 zombie_gibs
  rotate: false
- xy: 768, 712
+ xy: 768, 680
  size: 128, 128
  orig: 0, 0
  offset: 0, 0
  index: 6
 zombie_shadow
  rotate: false
+ xy: 0, 808
+ size: 48, 32
+ orig: 0, 0
+ offset: 0, 0
+ index: 0
+zombie_shadow
+ rotate: false
+ xy: 48, 808
+ size: 48, 32
+ orig: 0, 0
+ offset: 0, 0
+ index: 1
+zombie_shadow
+ rotate: false
+ xy: 96, 808
+ size: 48, 32
+ orig: 0, 0
+ offset: 0, 0
+ index: 2
+zombie_side
+ rotate: false
  xy: 0, 840
- size: 48, 32
- orig: 0, 0
- offset: 0, 0
- index: 0
-zombie_shadow
- rotate: false
- xy: 48, 840
- size: 48, 32
- orig: 0, 0
- offset: 0, 0
- index: 1
-zombie_shadow
- rotate: false
- xy: 96, 840
- size: 48, 32
- orig: 0, 0
- offset: 0, 0
- index: 2
-zombie_side
- rotate: false
- xy: 0, 872
  size: 64, 64
  orig: 0, 0
  offset: 0, 0
  index: 0
 zombie_side
  rotate: false
- xy: 64, 872
+ xy: 64, 840
  size: 64, 64
  orig: 0, 0
  offset: 0, 0
  index: 1
 zombie_side
  rotate: false
- xy: 128, 872
+ xy: 128, 840
  size: 64, 64
  orig: 0, 0
  offset: 0, 0
  index: 2
 zombie_side
  rotate: false
- xy: 192, 872
+ xy: 192, 840
  size: 64, 64
  orig: 0, 0
  offset: 0, 0
  index: 3
 zombie_up
  rotate: false
- xy: 0, 936
+ xy: 0, 904
  size: 64, 64
  orig: 0, 0
  offset: 0, 0
  index: 0
 zombie_up
  rotate: false
- xy: 64, 936
+ xy: 64, 904
  size: 64, 64
  orig: 0, 0
  offset: 0, 0
  index: 1
 zombie_up
  rotate: false
- xy: 128, 936
+ xy: 128, 904
  size: 64, 64
  orig: 0, 0
  offset: 0, 0
  index: 2
 zombie_up
  rotate: false
- xy: 192, 936
+ xy: 192, 904
  size: 64, 64
  orig: 0, 0
  offset: 0, 0

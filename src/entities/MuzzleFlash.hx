@@ -15,7 +15,7 @@ class MuzzleFlash extends Entity {
     for(t in anim.frames) {
       t.dx = t.dy = -48;
     }
-    anim.speed = 10;
+    anim.speed = 9 + Math.random()*2;
     anim.loop = false;
     anim.onAnimEnd = function() {
       purge = true;
