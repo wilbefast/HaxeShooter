@@ -1,3 +1,6 @@
+import h2d.Layers;
+import hxd.Cursor.CustomCursor;
+
 class GameScreen extends State {
 
   private static inline var ZOMBIE_INITIAL_PERIOD = 1.5;
@@ -6,12 +9,16 @@ class GameScreen extends State {
   private static inline var ZOMBIE_DISTANCE = 50.0;
 
   private var zombiePeriod : Float;
+  private var zombieTimer : Float;
+
+  private var cursor : h2d.Object;
+
   private var avatar : Avatar;
+
   private var wallNorth : Wall;
   private var wallSouth : Wall;
   private var wallEast : Wall;
   private var wallWest : Wall;
-  private var zombieTimer : Float;
 
   public override function new() {
     super({
@@ -27,19 +34,13 @@ class GameScreen extends State {
     zombiePeriod = ZOMBIE_INITIAL_PERIOD;
     zombieTimer = zombiePeriod;
 
-    // create backgroundeate background
-    var background = new h2d.Object(this);
+    // create background
+    var background = new h2d.Object();
     var backgroundTile = hxd.Res.concrete.toTile();
-    var x = 0.0;
-    while(x < State.WIDTH) {
-      var y = 0.0;
-      while(y < State.HEIGHT) {
-        var backgroundBitmap = new h2d.Bitmap(backgroundTile, background);
-        backgroundBitmap.setPosition(x, y);
-        y += backgroundTile.height;
-      }
-      x += backgroundTile.width;
-    }
+    backgroundTile.setSize(State.WIDTH, State.HEIGHT);
+    var bitmap = new h2d.Bitmap(backgroundTile, this);
+    bitmap.tileWrap = true;
+    this.addChildAt(background, -1);
 
     // create walls
     wallNorth = new Wall({
@@ -71,13 +72,22 @@ class GameScreen extends State {
       height : 3*State.HEIGHT
     });
 
-    // create avatar
+    // create entities
     avatar = new Avatar({
       parent : this,
       x : State.WIDTH / 2,
       y : State.HEIGHT / 2
     });
-    
+
+    // create cursor
+    cursor = new h2d.Object();
+    var atlas = hxd.Res.foreground;
+    var crosshairTile = atlas.get("crosshair");
+    Useful.assert(crosshairTile != null, "atlas must contain the 'crosshair'");
+    var bitmap = new h2d.Bitmap(crosshairTile, cursor);
+    bitmap.x = - 64;
+    bitmap.y = 64;
+    this.addChildAt(cursor, 1);
   }
 
   public override function onLeave(newState : State) {
@@ -88,6 +98,8 @@ class GameScreen extends State {
 
   public override function onUpdate(dt : Float, mouseX : Float, mouseY : Float) {
     // read the mouse position
+    cursor.x = mouseX;
+    cursor.y = mouseY;
     avatar.setTarget(mouseX, mouseY);
 
     // tick the simulation
@@ -99,13 +111,15 @@ class GameScreen extends State {
     zombieTimer -= dt;
     if(zombieTimer <= 0) {
       zombieTimer = zombiePeriod;
-      zombiePeriod = Math.max(ZOMBIE_MINIMUM_PERIOD, zombiePeriod - ZOMBIE_PERIOD_DECREASE);
       var angle = Math.random() * Math.PI * 2;
       var zombie = new Zombie({
         parent : this,
         x : State.WIDTH * (0.5 + Math.cos(angle)),
         y : State.HEIGHT * (0.5 + Math.sin(angle))
       });
+      zombie.onDeath = function() {
+        zombiePeriod = Math.max(ZOMBIE_MINIMUM_PERIOD, zombiePeriod - ZOMBIE_PERIOD_DECREASE);
+      }
     }
 
     // sort children by y-axis

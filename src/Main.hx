@@ -1,3 +1,4 @@
+import h2d.Interactive;
 import hxd.Res;
 import haxe.Ucs2;
 import js.html.MouseEvent;
@@ -34,11 +35,15 @@ class Main extends hxd.App {
 
     private function onAssetsLoaded() {
       var atlas = Res.foreground;
-
+      
       // set up viewport with letterbox
       s2d.scaleMode = LetterBox(State.WIDTH, State.HEIGHT, false, Center, Center);
       var mask = new h2d.Mask(State.WIDTH, State.HEIGHT, s2d);
 
+      // hide the cursor
+      var interactive = new Interactive(State.WIDTH, State.HEIGHT, s2d);
+      interactive.cursor = Hide;
+      
       // initialise state machine
       State.init({
         parent : mask,

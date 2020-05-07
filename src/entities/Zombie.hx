@@ -45,6 +45,9 @@ class Zombie extends Entity {
   private var animRight : h2d.Anim;
   private var animShadow : h2d.Anim;
 
+  // events
+  public var onDeath : Void -> Void;
+
   // ------------------------------------------------------------
   // CONSTRUCTOR
   // ------------------------------------------------------------
@@ -193,6 +196,9 @@ class Zombie extends Entity {
         target.addScore(1);
         
         // die
+        if (onDeath != null) {
+          onDeath();
+        }
         new ZombieGibs(this);
         this.purge = true;
       }
