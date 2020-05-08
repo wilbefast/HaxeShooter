@@ -1,9 +1,15 @@
 class BulletImpact extends Entity {
+  
+  private static inline var RADIUS = 64.0;
+
 
   public function new(bullet : Bullet) {
     super(cast(bullet.parent, h2d.Layers));
     x = bullet.x;
     y = bullet.y;
+
+    // collisions
+    collider = new EntityCollider(this, RADIUS);
 
     // visuals
     var atlas = hxd.Res.foreground;

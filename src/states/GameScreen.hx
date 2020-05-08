@@ -4,12 +4,15 @@ import hxd.Cursor.CustomCursor;
 class GameScreen extends State {
 
   private static inline var ZOMBIE_INITIAL_PERIOD = 1.5;
-  private static inline var ZOMBIE_PERIOD_DECREASE = 0.02;
+  private static inline var ZOMBIE_PERIOD_DECREASE = 0.05;
   private static inline var ZOMBIE_MINIMUM_PERIOD = 0.1;
   private static inline var ZOMBIE_DISTANCE = 50.0;
+  private static inline var ZOMBIE_MAXIMUM = 30;
 
   private var zombiePeriod : Float;
   private var zombieTimer : Float;
+  private var zombieMaximum : Int;
+  private var zombieCount : Int;
 
   private var cursor : h2d.Object;
 
@@ -33,6 +36,8 @@ class GameScreen extends State {
     // reset zombie timer
     zombiePeriod = ZOMBIE_INITIAL_PERIOD;
     zombieTimer = zombiePeriod;
+    zombieMaximum = 1;
+    zombieCount = 0;
 
     // create background
     var background = new h2d.Object();
@@ -108,17 +113,22 @@ class GameScreen extends State {
 
     
     // spawn zombies periodically
-    zombieTimer -= dt;
-    if(zombieTimer <= 0) {
-      zombieTimer = zombiePeriod;
-      var angle = Math.random() * Math.PI * 2;
-      var zombie = new Zombie({
-        parent : this,
-        x : State.WIDTH * (0.5 + Math.cos(angle)),
-        y : State.HEIGHT * (0.5 + Math.sin(angle))
-      });
-      zombie.onDeath = function() {
-        zombiePeriod = Math.max(ZOMBIE_MINIMUM_PERIOD, zombiePeriod - ZOMBIE_PERIOD_DECREASE);
+    if(zombieCount < zombieMaximum) {
+      zombieTimer -= dt;
+      if(zombieTimer <= 0) {
+        zombieCount++;
+        zombieTimer = zombiePeriod;
+        var angle = Math.random() * Math.PI * 2;
+        var zombie = new Zombie({
+          parent : this,
+          x : State.WIDTH * (0.5 + Math.cos(angle)),
+          y : State.HEIGHT * (0.5 + Math.sin(angle))
+        });
+        zombie.onDeath = function() {
+          zombiePeriod = Math.max(ZOMBIE_MINIMUM_PERIOD, zombiePeriod*(1 -ZOMBIE_PERIOD_DECREASE));
+          zombieMaximum = cast(Math.min(ZOMBIE_MAXIMUM, zombieMaximum + 1), Int);
+          zombieCount--;
+        }
       }
     }
 

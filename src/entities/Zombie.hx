@@ -9,7 +9,7 @@ class Zombie extends Entity {
 
   // collisions
   private static inline var RADIUS = 16;
-  private static inline var COLLISION_STUN_DURATION = 0.2;
+  private static inline var COLLISION_STUN_DURATION = 0.1;
   private static inline var ZOMBIE_COLLISION_KNOCKBACK = 200;
   private static inline var AVATAR_COLLISION_KNOCKBACK = 10;
   private static inline var MAX_REPULSION = 0.7;
@@ -25,7 +25,7 @@ class Zombie extends Entity {
   private static inline var MAX_HITPOINTS = 100;
   private static inline var BULLET_DAMAGE = 25;
   private static inline var BULLET_KNOCKBACK = 150;
-  private static inline var BULLET_STUN_DURATION = 0.4;
+  private static inline var BULLET_STUN_DURATION = 0.2;
 
 
   // ------------------------------------------------------------
@@ -36,6 +36,7 @@ class Zombie extends Entity {
   private var moveDirection = new Vector(0, 0, 0);
   private var hitpoints : Int = MAX_HITPOINTS;
   private var stunDuration : Float = 0.0;
+  private var hasDamagedMe = new Map<Entity, Bool>();
 
   // visuals
   private var currentAnim : h2d.Anim;
@@ -44,6 +45,7 @@ class Zombie extends Entity {
   private var animLeft : h2d.Anim;
   private var animRight : h2d.Anim;
   private var animShadow : h2d.Anim;
+  private var animStunned : h2d.Anim;
 
   // events
   public var onDeath : Void -> Void;
@@ -61,7 +63,7 @@ class Zombie extends Entity {
     x = args.x;
     y = args.y;
     
-    // phyics
+    // physics
     maxSpeed = MAX_SPEED;
     friction = HIGH_FRICTION;
     collider = new EntityCollider(this, RADIUS);
@@ -96,6 +98,12 @@ class Zombie extends Entity {
     animRight.x = -32;
     animRight.y = 24;
     animRight.visible = false;
+    var stunned = atlas.getAnim("zombie_stunned");
+    Useful.assert(stunned != null, "atlas must contain the 'zombie_stunned'");
+    animStunned = new h2d.Anim(stunned, this);
+    animStunned.x = -32;
+    animStunned.y = 24;
+    animStunned.visible = false;
 
     // artificial intelligence
     target = cast(Entity.getFirst(function(entity) {
@@ -185,33 +193,43 @@ class Zombie extends Entity {
   // ------------------------------------------------------------
 
   public override function onCollision(other : Entity, dt : Float) : Void {
-    if(Std.is(other, Bullet)) {
+    if(Std.is(other, BulletImpact)) {
+      if(!hasDamagedMe[other]) {
+        hasDamagedMe[other] = true;
+
+        // knock-back self
+        moveDirection.set(x - other.x, y - other.y);
+        moveDirection.scale3(AVATAR_COLLISION_KNOCKBACK);
+        speed = speed.add(moveDirection);
+
+        // stun
+        stunDuration = BULLET_STUN_DURATION;
+        setAnimation(animStunned);
+
+        // take damage
+        hitpoints -= BULLET_DAMAGE;
+        if(hitpoints <= 0) {
+          // add score
+          target.addScore(1);
+          
+          // die
+          if (onDeath != null) {
+            onDeath();
+          }
+          new ZombieGibs(this);
+          this.purge = true;
+        }
+      }
+    }
+    else if(Std.is(other, Bullet)) {
       // the bullet is destroyed
       cast(other, Bullet).explode();
 
-      // take damage
-      hitpoints -= BULLET_DAMAGE;
-      if(hitpoints <= 0) {
-        // add score
-        target.addScore(1);
-        
-        // die
-        if (onDeath != null) {
-          onDeath();
-        }
-        new ZombieGibs(this);
-        this.purge = true;
-      }
-      else {
-        // stun
-        stunDuration = BULLET_STUN_DURATION;
-
-        // knock-back
-        moveDirection.set(x - other.x, y - other.y);
-        moveDirection.scale3(BULLET_KNOCKBACK);
-        moveDirection.add(other.speed);
-        speed = speed.add(moveDirection);
-      }
+      // knock-back
+      moveDirection.set(x - other.x, y - other.y);
+      moveDirection.scale3(BULLET_KNOCKBACK);
+      moveDirection.add(other.speed);
+      speed = speed.add(moveDirection);
     }
     else if(Std.is(other, Zombie)) {
       // stun

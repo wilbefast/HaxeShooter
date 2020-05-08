@@ -27,7 +27,7 @@ class Avatar extends Entity {
   private static inline var MAX_SPEED = 1000.0;
 
   // weapon
-  private static inline var TIME_BETWEEN_BULLETS = 0.1;
+  private static inline var TIME_BETWEEN_BULLETS = 0.2;
   private static inline var RECOIL = 100.0;
 
   // ------------------------------------------------------------

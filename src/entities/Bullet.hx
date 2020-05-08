@@ -6,7 +6,7 @@ class Bullet extends Entity {
   // CONSTANTS
   // ------------------------------------------------------------
 
-  private static inline var RADIUS = 24.0;
+  private static inline var RADIUS = 28.0;
   private static inline var INITIAL_SPEED = 500.0;
   private static inline var MAX_SPEED = 2000.0;
   private static inline var TRAIL_PERIOD = 0.01;
