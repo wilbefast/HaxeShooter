@@ -55,6 +55,9 @@ class Main extends hxd.App {
       var window = hxd.Window.getInstance();
       window.addEventTarget(State.triggerEvent);
 
+      // start the music
+      hxd.Res.music.play(true, 0.3);
+
       // ready to run update logic
       loaded = true;
     }

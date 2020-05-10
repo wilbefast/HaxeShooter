@@ -14,6 +14,7 @@ class Zombie extends Entity {
   private static inline var AVATAR_COLLISION_KNOCKBACK = 10;
   private static inline var MAX_REPULSION = 0.7;
   private static inline var REPULSION_RANGE = RADIUS*6;
+  private static inline var TIME_TO_KILL = 0.1;
 
   // movement
   private static inline var HIGH_FRICTION = 2000.0;
@@ -37,6 +38,7 @@ class Zombie extends Entity {
   private var hitpoints : Int = MAX_HITPOINTS;
   private var stunDuration : Float = 0.0;
   private var hasDamagedMe = new Map<Entity, Bool>();
+  private var killProgress : Float = 0.0;
 
   // visuals
   private var currentAnim : h2d.Anim;
@@ -117,12 +119,16 @@ class Zombie extends Entity {
   // ------------------------------------------------------------
 
   public override function update(dt : Float) {
+    // timeout kill progress
+    killProgress = Math.max(0, killProgress - dt);
+
     if(stunDuration > 0) {
       // recover from stun
       stunDuration -= dt;
       friction = HIGH_FRICTION;
     }
     else {
+
       // pursue target
       moveDirection.set(target.x - x, target.y - y);
       var norm = moveDirection.length();
@@ -242,29 +248,14 @@ class Zombie extends Entity {
     }
     else if(Std.is(other, Avatar)) {
       if(stunDuration <= 0) {
-        if(speed.lengthSq() > other.speed.lengthSq()) {
+        // increment kill progress
+        killProgress += 2*dt;
+        if(killProgress > TIME_TO_KILL) {
           // game over!
           State.setCurrent("score");
           hxd.Res.gameover.play(false, 0.1);
         }
-        else {
-          // slow other
-          other.speed.scale3(0.4);
-
-          // knock-back other
-          moveDirection.set(other.x - x, other.y - y);
-          moveDirection.scale3(AVATAR_COLLISION_KNOCKBACK);
-          other.speed = other.speed.add(moveDirection);
-        }
       }
-
-      // knock-back self
-      moveDirection.set(x - other.x, y - other.y);
-      moveDirection.scale3(ZOMBIE_COLLISION_KNOCKBACK);
-      speed = speed.add(moveDirection).add(other.speed);
-
-      // stun
-      stunDuration = COLLISION_STUN_DURATION;
     }
   }
 }
