@@ -107,10 +107,14 @@ class GameScreen extends State {
     cursor.y = mouseY;
     avatar.setTarget(mouseX, mouseY);
 
+    // scale the cursor based on player reload
+    var cursorScale = 1 - avatar.getReloadProgress();
+    cursorScale *= cursorScale;
+    cursor.setScale(1 + 0.2*cursorScale);
+
     // tick the simulation
     Entity.updateAll(dt);
     EntityCollider.generateCollisions(dt);
-
     
     // spawn zombies periodically
     if(zombieCount < zombieMaximum) {

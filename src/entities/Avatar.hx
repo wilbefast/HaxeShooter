@@ -121,13 +121,15 @@ class Avatar extends Entity {
     // check whether mouse is down
     var isFiring = Key.isDown(Key.MOUSE_LEFT);
 
+    // aim
+    weaponDirection.load(weaponTarget);
+    weaponDirection.x -= x;
+    weaponDirection.y -= y;
+    
     // character weapon
     reloadTime = Math.max(0, reloadTime - dt);
     if(isFiring && reloadTime <= 0) {
-      // aim and fire
-      weaponDirection.load(weaponTarget);
-      weaponDirection.x -= x;
-      weaponDirection.y -= y;
+      // fire
       weaponDirection.normalize();
       var bullet = new Bullet(this, weaponDirection);
 
@@ -155,8 +157,8 @@ class Avatar extends Entity {
     }
 
     // choose animation
-    if(Math.abs(moveDirection.x) > Math.abs(moveDirection.y)) {
-      if(moveDirection.x < 0) {
+    if(Math.abs(weaponDirection.x) > Math.abs(weaponDirection.y)) {
+      if(weaponDirection.x < 0) {
         setAnimation(animLeft);
       }
       else {
@@ -164,7 +166,7 @@ class Avatar extends Entity {
       }
     }
     else {
-      if(moveDirection.y < 0) {
+      if(weaponDirection.y < 0) {
         setAnimation(animUp);
       }
       else {
@@ -218,6 +220,10 @@ class Avatar extends Entity {
 
   public function setTarget(x : Float, y : Float) : Void {
     weaponTarget.set(x, y);
+  }
+
+  public function getReloadProgress() : Float {
+    return 1 - (reloadTime / TIME_BETWEEN_BULLETS);
   }
 
   // ------------------------------------------------------------
