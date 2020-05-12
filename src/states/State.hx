@@ -59,11 +59,9 @@ class State extends h2d.Layers {
     }
 
     // create the fonts
-    smallFont = hxd.res.DefaultFont.get().clone();
-    smallFont.resizeTo(24);
+    smallFont = hxd.Res.mario_kart_ds_regular_48.toFont();
     smallFont.setOffset(0, -12);
-    bigFont = hxd.res.DefaultFont.get().clone();
-    bigFont.resizeTo(48);
+    bigFont = hxd.Res.mario_kart_ds_regular_48.toFont();
     bigFont.setOffset(0, -24);
   }
 

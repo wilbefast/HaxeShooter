@@ -5,3 +5,4 @@ package-lock.json
 build/js/res.pak
 *.kra-autosave.kra
 *.kra~
+res/.tmp/

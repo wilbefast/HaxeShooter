@@ -44,6 +44,14 @@ class Main extends hxd.App {
       var interactive = new Interactive(State.WIDTH, State.HEIGHT, s2d);
       interactive.cursor = Hide;
       
+      // create background
+      var background = new h2d.Object();
+      var backgroundTile = hxd.Res.concrete.toTile();
+      backgroundTile.setSize(State.WIDTH, State.HEIGHT);
+      var bitmap = new h2d.Bitmap(backgroundTile, background);
+      bitmap.tileWrap = true;
+      mask.addChildAt(background, -1);
+
       // initialise state machine
       State.init({
         parent : mask,

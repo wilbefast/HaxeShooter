@@ -39,14 +39,6 @@ class GameScreen extends State {
     zombieMaximum = 1;
     zombieCount = 0;
 
-    // create background
-    var background = new h2d.Object();
-    var backgroundTile = hxd.Res.concrete.toTile();
-    backgroundTile.setSize(State.WIDTH, State.HEIGHT);
-    var bitmap = new h2d.Bitmap(backgroundTile, this);
-    bitmap.tileWrap = true;
-    this.addChildAt(background, -1);
-
     // create walls
     wallNorth = new Wall({
       parent : this,
@@ -110,7 +102,7 @@ class GameScreen extends State {
     // scale the cursor based on player reload
     var cursorScale = 1 - avatar.getReloadProgress();
     cursorScale *= cursorScale;
-    cursor.setScale(1 + 0.2*cursorScale);
+    cursor.setScale(0.5 + 0.2*cursorScale);
 
     // tick the simulation
     Entity.updateAll(dt);
