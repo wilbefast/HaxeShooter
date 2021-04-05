@@ -106,7 +106,7 @@ class Avatar extends Entity {
 
     // score
     scoreLabel = new h2d.Text(State.smallFont, args.parent);
-    scoreLabel.text = 'score: $score';
+    scoreLabel.text = '$score';
     scoreLabel.textAlign = Left;
     scoreLabel.color = new Vector(1, 1, 1);
     scoreLabel.x = 32;
@@ -254,7 +254,7 @@ class Avatar extends Entity {
 
   public function addScore(amount : Int) {
     score += amount;
-    scoreLabel.text = 'score: $score';
+    scoreLabel.text = '$score';
   }
 
   public override function onPurge() {

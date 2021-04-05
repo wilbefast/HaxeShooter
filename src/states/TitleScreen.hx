@@ -11,11 +11,11 @@ class TitleScreen extends State {
   public override function onEnter(previousState : State) {
     // show title
     var label = new h2d.Text(State.bigFont, this);
-    label.text = "CLICK TO PLAY";
+    label.text = "DINOSOCIAL\n\nDISTANCING\n\n\n\nby wilbefast\n\nclick to play";
     label.textAlign = Center;
     label.color = new Vector(1, 1, 1);
     label.x = State.WIDTH / 2;
-    label.y = State.HEIGHT / 2;
+    label.y = State.HEIGHT / 4;
   }
 
   public override function onLeave(newState : State) {

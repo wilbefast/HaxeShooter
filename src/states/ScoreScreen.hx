@@ -16,11 +16,15 @@ class ScoreScreen extends State {
 
     // show score
     var label = new h2d.Text(State.bigFont, this);
-    label.text = 'GAME OVER\nscore: ${State.score}';
+    label.text = 'GAME OVER\n\n\nyou socially distanced\n\n${State.score}   dinosaur';
+    if (State.score != 1)
+    {
+      label.text += 's';
+    }
     label.textAlign = Center;
     label.color = new Vector(1, 1, 1);
     label.x = State.WIDTH / 2;
-    label.y = State.HEIGHT / 2;
+    label.y = State.HEIGHT / 3;
   }
 
   public override function onUpdate(dt : Float, mouseX : Float, mouseY : Float) {
